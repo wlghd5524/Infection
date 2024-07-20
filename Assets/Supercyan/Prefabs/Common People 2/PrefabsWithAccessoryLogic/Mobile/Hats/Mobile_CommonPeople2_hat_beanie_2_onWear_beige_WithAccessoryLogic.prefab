@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4270856628500147136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1577063403566337509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d967dfa3f5dcc245858efb60b60dd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 1323368303321588581}
+  m_rig: {fileID: 7483690757066795135}
+--- !u!1001 &3302757807511723980
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710063230304192659, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050735481572643369, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_Name
+      value: Mobile_CommonPeople2_hat_beanie_2_onWear_beige_WithAccessoryLogic
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577993477418974377, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 225cca4c5bf0ecf41bd853ae6889dd45, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7af2cb335b5709a45a99be058bb9f5b8, type: 3}
+--- !u!1 &1577063403566337509 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4050735481572643369, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3302757807511723980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7483690757066795135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5336389173139306419, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3302757807511723980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1323368303321588581 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4577993477418974377, guid: 7af2cb335b5709a45a99be058bb9f5b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3302757807511723980}
+  m_PrefabAsset: {fileID: 0}

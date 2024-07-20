@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &2154746906293698405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269690979705765873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b040736da90200d469616062cbbd8ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_useBothHands: 0
+  m_preferredHand: 2
+  m_itemType: 3
+  m_dummyPoint: {fileID: 5510779069358298690}
+  m_itemAnimations: {fileID: 11400000, guid: 692c4cd85dc3f134a9ee7db175ef5c99, type: 2}
+  m_accessoryLogic: {fileID: 0}
+  m_flipXForHand: 0
+  m_flipYForHand: 0
+  m_flipZForHand: 2
+--- !u!1001 &1871639490771640663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 228680447399822364, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605662730361790118, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_Name
+      value: Mobile_CommonPeople2_umbrella_2_colour_WithItemLogic
+      objectReference: {fileID: 0}
+    - target: {fileID: 1398160406732078963, guid: 5396c153956816a4cab7e9fac48746f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b3a24f8eef3b8564b8d21cc37f153c26, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5396c153956816a4cab7e9fac48746f9, type: 3}
+--- !u!1 &1269690979705765873 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 605662730361790118, guid: 5396c153956816a4cab7e9fac48746f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1871639490771640663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5510779069358298690 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6161872544191952661, guid: 5396c153956816a4cab7e9fac48746f9,
+    type: 3}
+  m_PrefabInstance: {fileID: 1871639490771640663}
+  m_PrefabAsset: {fileID: 0}

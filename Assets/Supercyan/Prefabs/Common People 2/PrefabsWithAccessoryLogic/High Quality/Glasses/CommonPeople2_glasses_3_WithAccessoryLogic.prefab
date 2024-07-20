@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &8523702002462913882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6447225915552457011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d967dfa3f5dcc245858efb60b60dd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 2959406796254756240}
+  m_rig: {fileID: 3116655968628393129}
+--- !u!1001 &7137682387360430238
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3547940624972645143, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4212837762079676845, guid: 226b741a3f914944688f23246a18cd5a,
+        type: 3}
+      propertyPath: m_Name
+      value: CommonPeople2_glasses_3_WithAccessoryLogic
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 226b741a3f914944688f23246a18cd5a, type: 3}
+--- !u!1 &6447225915552457011 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4212837762079676845, guid: 226b741a3f914944688f23246a18cd5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7137682387360430238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3116655968628393129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5210297838186822711, guid: 226b741a3f914944688f23246a18cd5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7137682387360430238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2959406796254756240 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5341208260903568654, guid: 226b741a3f914944688f23246a18cd5a,
+    type: 3}
+  m_PrefabInstance: {fileID: 7137682387360430238}
+  m_PrefabAsset: {fileID: 0}

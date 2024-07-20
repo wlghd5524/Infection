@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3343293386684650652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7961339566567155468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d967dfa3f5dcc245858efb60b60dd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 8897470682980554269}
+  m_rig: {fileID: 2037298285680476822}
+--- !u!1001 &4983605786549249290
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314533024128456892, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3122418587007320582, guid: 589645c527db9ab44af1c6839244c027,
+        type: 3}
+      propertyPath: m_Name
+      value: CommonPeople2_shoulderBag_1_onWear_blue_WithAccessoryLogic
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 589645c527db9ab44af1c6839244c027, type: 3}
+--- !u!1 &7961339566567155468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3122418587007320582, guid: 589645c527db9ab44af1c6839244c027,
+    type: 3}
+  m_PrefabInstance: {fileID: 4983605786549249290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2037298285680476822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6443732913701136284, guid: 589645c527db9ab44af1c6839244c027,
+    type: 3}
+  m_PrefabInstance: {fileID: 4983605786549249290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8897470682980554269 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4491066831152050967, guid: 589645c527db9ab44af1c6839244c027,
+    type: 3}
+  m_PrefabInstance: {fileID: 4983605786549249290}
+  m_PrefabAsset: {fileID: 0}

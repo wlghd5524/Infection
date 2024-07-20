@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &466356911037717125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8667382268735743851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b040736da90200d469616062cbbd8ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_useBothHands: 0
+  m_preferredHand: 2
+  m_itemType: 3
+  m_dummyPoint: {fileID: 8667382268735847241}
+  m_itemAnimations: {fileID: 11400000, guid: 147ee95f33839694b87cb4ef1a23c7c1, type: 2}
+  m_accessoryLogic: {fileID: 0}
+  m_flipXForHand: 0
+  m_flipYForHand: 0
+  m_flipZForHand: 2
+--- !u!1001 &7175280085025532781
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2007212872188480518, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_Name
+      value: hospital_staff_thermometer_1_WithItemLogic
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2007212872188645414, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8b276e44f7d0b25489cf1c5d0b66b61d, type: 3}
+--- !u!1 &8667382268735743851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2007212872188480518, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7175280085025532781}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8667382268735847241 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2007212872188645412, guid: 8b276e44f7d0b25489cf1c5d0b66b61d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7175280085025532781}
+  m_PrefabAsset: {fileID: 0}

@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &9101761920880429604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279654139178720553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d967dfa3f5dcc245858efb60b60dd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 1279654139190284369}
+  m_rig: {fileID: 1279654139178720593}
+--- !u!1001 &1593260589957975376
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 566988151634530425, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_Name
+      value: hospital_staff_stethoscope
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566988151635020825, guid: 407f0ff062a29e845b1986240e229627,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 407f0ff062a29e845b1986240e229627, type: 3}
+--- !u!1 &1279654139178720553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 566988151634530425, guid: 407f0ff062a29e845b1986240e229627,
+    type: 3}
+  m_PrefabInstance: {fileID: 1593260589957975376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1279654139178720593 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 566988151634530305, guid: 407f0ff062a29e845b1986240e229627,
+    type: 3}
+  m_PrefabInstance: {fileID: 1593260589957975376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &1279654139190284369 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 566988151648197889, guid: 407f0ff062a29e845b1986240e229627,
+    type: 3}
+  m_PrefabInstance: {fileID: 1593260589957975376}
+  m_PrefabAsset: {fileID: 0}

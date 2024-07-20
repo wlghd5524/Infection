@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &4976680913873038867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8218958222798547503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d967dfa3f5dcc245858efb60b60dd63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_renderer: {fileID: 8218958222795368279}
+  m_rig: {fileID: 8218958222798547543}
+--- !u!1001 &8710429332848969603
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 787623752429333932, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_Name
+      value: hospital_staff_stethoscope_inflateVersion
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787623752429105612, guid: d85f0621556eba44a94a3c67968a043f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d85f0621556eba44a94a3c67968a043f, type: 3}
+--- !u!1 &8218958222798547503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 787623752429333932, guid: d85f0621556eba44a94a3c67968a043f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8710429332848969603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8218958222798547543 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 787623752429333972, guid: d85f0621556eba44a94a3c67968a043f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8710429332848969603}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8218958222795368279 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 787623752440832212, guid: d85f0621556eba44a94a3c67968a043f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8710429332848969603}
+  m_PrefabAsset: {fileID: 0}
