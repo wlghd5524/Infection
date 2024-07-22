@@ -33,6 +33,7 @@ public class OutpatientCreator : MonoBehaviour
         {
             Debug.LogError("Gateways 게임 오브젝트를 찾을 수 없습니다.");
         }
+        InvokeRepeating("spawnOutpatient", 0.1f, spawnDelay);
     }
 
     // Update는 매 프레임마다 호출됩니다.

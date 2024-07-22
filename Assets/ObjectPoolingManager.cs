@@ -10,6 +10,7 @@ public class ObjectPoolingManager : MonoBehaviour
     // 최대 외래 환자와 의사 수
     public int maxOfOutpatient;
     public int maxOfDoctor;
+    public int maxOfNurse;
 
     // 비활성화된 외래 환자와 의사 오브젝트를 저장하는 큐
     public Queue<GameObject> outpatientQueue = new Queue<GameObject>();
@@ -22,6 +23,7 @@ public class ObjectPoolingManager : MonoBehaviour
         // 의사와 외래 환자 초기화
         DoctorInitialize();
         OutpatientInitialize();
+        NurseInitialize();
     }
 
     private void OutpatientInitialize()
@@ -31,7 +33,7 @@ public class ObjectPoolingManager : MonoBehaviour
         for (int i = 0; i < maxOfOutpatient; i++)
         {
             // 프리팹 리스트에서 랜덤으로 하나 선택하여 생성
-            GameObject newOutPatient = Instantiate(OutpatientPrefabs[0]);
+            GameObject newOutPatient = Instantiate(OutpatientPrefabs[Random.Range(0,OutpatientPrefabs.Length)]);
             outpatientQueue.Enqueue(newOutPatient);
             newOutPatient.SetActive(false);
         }
@@ -68,6 +70,21 @@ public class ObjectPoolingManager : MonoBehaviour
             waypoint.doctor = newDoctor;
         }
     }
+
+    private void NurseInitialize()
+    {
+        //간호사 프리팹 로드
+        GameObject[] NursePrefabs = Resources.LoadAll<GameObject>("Prefabs/Nurse");
+        for (int i = 0;i<maxOfNurse;i++)
+        {
+            Waypoint spawnArea = GameObject.Find("NurseWaypoints").transform.Find("Ward (" +(i/20)+ ")").transform.Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
+            GameObject newNurse = Instantiate(NursePrefabs[Random.Range(0, NursePrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
+            newNurse.name = "Nurse " + i;
+            NurseController nurseController = newNurse.GetComponent<NurseController>();
+        }
+    }
+
+
 
     // 외래 환자 비활성화 및 초기화
     public void DeactivateOutpatient(GameObject outpatient)

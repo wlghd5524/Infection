@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5738240122181187022}
   - component: {fileID: 5789011100182972266}
   - component: {fileID: 5646276208500156619}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: IsInfection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,10 +91,70 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 126255994702043702, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 204015602586808913, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 268203512691750776, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 407058678223538429, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 498215213985730864, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1020301890415982544, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1119942676801042198, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1969482264803102560, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2193755802374940835, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2218292664886482144, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2286942598477676566, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2326338107831561288, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: f297797635a2b7445ad2ea55cec7353b, type: 2}
+    - target: {fileID: 2893717817371229958, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3320964463235565502, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3330153425020144343, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3367986712972335779, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3625188989371264274, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_LocalRotation.w
       value: -0.0003167211
@@ -102,6 +162,18 @@ PrefabInstance:
     - target: {fileID: 3625188989371264274, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0.00024128772
+      objectReference: {fileID: 0}
+    - target: {fileID: 3786437589340733216, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4486847045012646402, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5098347632799339983, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5253235089425523594, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_LocalRotation.w
@@ -111,13 +183,65 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.00024348818
       objectReference: {fileID: 0}
+    - target: {fileID: 5255375758629880403, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5397139482981703121, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5471710188978004625, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635310815280405619, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6411845658992402515, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814600197700598048, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7221945045726878740, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7237917698230567319, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7242751210019292120, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7743734398582797390, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8418274165782525098, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_Name
       value: CommonPeople2_male4_A_E_SimpleMovement
       objectReference: {fileID: 0}
     - target: {fileID: 8418274165782525098, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8418274165782525098, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_TagString
       value: Doctor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8575193986723985760, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884339863015033090, guid: faece14707f5eea4a936982bab704c36, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9194212356654165520, guid: faece14707f5eea4a936982bab704c36, type: 3}
       propertyPath: m_RootOrder
