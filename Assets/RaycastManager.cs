@@ -36,7 +36,7 @@ public class RaycastManager : MonoBehaviour
     private void FixedUpdate()
     {
         HandleMouseInput();
-        HandleMouseHover();
+        //HandleMouseHover();
     }
 
     private void HandleMouseInput()
@@ -52,7 +52,7 @@ public class RaycastManager : MonoBehaviour
             // 충돌을 감지하도록 설정, NPC Layer만 검사
             if (Physics.Raycast(ray, out hit, 100f, npcLayerMask))
             {
-                Debug.Log("Raycast hit: " + hit.collider.name); // Raycast가 hit한 콜라이더의 이름 가져오기
+                //Debug.Log("Raycast hit: " + hit.collider.name); // Raycast가 hit한 콜라이더의 이름 가져오기
 
                 // 충돌 지점에 작은 구를 그려서 시각적으로 확인
                 Debug.DrawRay(hit.point, Vector3.up * 1f, Color.green, 2f);
@@ -66,7 +66,8 @@ public class RaycastManager : MonoBehaviour
                     if (person != null)
                     {
                         Debug.Log("NPC clicked: " + person.gameObject.name);    // 클릭된 NPC의 Person으로 이름 가져오기
-                        currentTransform.GetComponent<NPCClickManager>().LocationOfOutpatient();
+                        if(person.gameObject.CompareTag("OutPatient"))
+                            currentTransform.GetComponent<NPCClickManager>().SearchNurse(person.gameObject.transform.position);
                         //UIManager.Instance.ToggleNPCInfo(person);
                         break;
                     }
@@ -88,11 +89,6 @@ public class RaycastManager : MonoBehaviour
 
     private void HandleMouseHover()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            return; // UI가 마우스 오버 이벤트를 차단하지 않도록 처리
-        }
-
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 

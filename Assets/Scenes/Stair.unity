@@ -4972,8 +4972,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8b93c221899104ba8387ae8c7502fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxOfOutpatient: 200
+  maxOfOutpatient: 10
   maxOfDoctor: 10
+  maxOfNurse: 20
 --- !u!4 &159629732
 Transform:
   m_ObjectHideFlags: 0
@@ -17176,7 +17177,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -17196,13 +17197,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694429266}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99998987, z: -0.0045059696, w: 0}
-  m_LocalPosition: {x: 110.46, y: 21.733, z: 141.956}
+  m_LocalRotation: {x: -0, y: 0.8395542, z: -0.5432759, w: 0}
+  m_LocalPosition: {x: 132.14, y: 32.37, z: 122.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0.516, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 65.814, y: 180, z: 0}
 --- !u!1 &701493371
 GameObject:
   m_ObjectHideFlags: 0
@@ -27373,6 +27374,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1914302373143901462, guid: a74bd963c73246f4695f71aaa1e50ffd, type: 3}
   m_PrefabInstance: {fileID: 1062347908}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1068614955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068614957}
+  - component: {fileID: 1068614956}
+  m_Layer: 0
+  m_Name: NurseCreator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1068614956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068614955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f67b46c8050fa54f8e15b9fabb295da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfNurse: 0
+--- !u!4 &1068614957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068614955}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 153.6015, y: 22.726046, z: 128.37424}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1071399727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -53528,3 +53574,4 @@ SceneRoots:
   - {fileID: 1397593732}
   - {fileID: 1819594404}
   - {fileID: 1740149364}
+  - {fileID: 1068614957}

@@ -23,7 +23,7 @@ public class DoctorOffice : Waypoint
                 next = waitingQueue.Dequeue();
                 doctor.GetComponent<StressController>().stress += (++doctor.GetComponent<DoctorController>().patientCount / 10) + 1;
                 is_empty = false;
-                next.signal = true;
+                next.doctorSignal = true;
             }
         }
     }

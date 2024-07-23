@@ -80,7 +80,8 @@ public class ObjectPoolingManager : MonoBehaviour
             Waypoint spawnArea = GameObject.Find("NurseWaypoints").transform.Find("Ward (" +(i/20)+ ")").transform.Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
             GameObject newNurse = Instantiate(NursePrefabs[Random.Range(0, NursePrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
             newNurse.name = "Nurse " + i;
-            NurseController nurseController = newNurse.GetComponent<NurseController>();
+            newNurse.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            
         }
     }
 
@@ -94,7 +95,8 @@ public class ObjectPoolingManager : MonoBehaviour
         outpatientController.waypoints.Clear();
         outpatientController.isWaiting = false;
         outpatientController.waypointIndex = 0;
-        outpatientController.signal = false;
+        outpatientController.doctorSignal = false;
+        outpatientController.nurseSignal = false;
         outpatientQueue.Enqueue(outpatient);
         outpatient.SetActive(false);
     }
@@ -131,5 +133,11 @@ public class ObjectPoolingManager : MonoBehaviour
         doctorController.isResting = false;
         //newDoctor.SetActive(true);
         return newDoctor;
+    }
+
+    public GameObject ActivateNurse(GameObject newNurse)
+    {
+        newNurse.GetComponent<SkinnedMeshRenderer>().enabled = true;
+        return newNurse;
     }
 }

@@ -337,6 +337,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5301254750824505747, guid: dfdb4d1521749c44b8a5e3477b874a2c, type: 3}
       insertIndex: -1
       addedObject: {fileID: -3172835726233460762}
+    - targetCorrespondingSourceObject: {fileID: 5301254750824505747, guid: dfdb4d1521749c44b8a5e3477b874a2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 983747694985296864}
   m_SourcePrefab: {fileID: 100100000, guid: dfdb4d1521749c44b8a5e3477b874a2c, type: 3}
 --- !u!1 &568689553133909412 stripped
 GameObject:
@@ -365,8 +368,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -537,7 +540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!195 &5787653495937679837
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -589,7 +592,24 @@ MonoBehaviour:
   waypointIndex: 0
   isWaiting: 0
   isWaitingForDoctor: 0
-  signal: 0
+  isWaitingForNurse: 0
+  doctorSignal: 0
+  nurseSignal: 0
+--- !u!114 &983747694985296864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568689553133909412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2a61fc4f196ccb44b3891eadd70e5ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxCastDistance: 100
+  boxCastSize: {x: 100, y: 1, z: 100}
+  npcTag: Nurse
 --- !u!4 &886531839517518257 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4771611340491554182, guid: dfdb4d1521749c44b8a5e3477b874a2c, type: 3}

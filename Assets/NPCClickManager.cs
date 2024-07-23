@@ -5,57 +5,56 @@ using UnityEngine;
 public class NPCClickManager : MonoBehaviour
 {
     public float boxCastDistance = 100f;  // 박스캐스트 거리
-    public Vector3 boxCastSize = new Vector3(2f, 2f, 2f); // 박스캐스트 크기
-    public string npcTag = "NPC"; // NPC 태그
-    public void LocationOfOutpatient()
+    public Vector3 boxCastSize = new Vector3(100f, 1f, 100f); // 박스캐스트 크기
+    public string npcTag = "Nurse"; // Nurse 태그
+
+    public void SearchNurse(Vector3 origin)
     {
-        // 앞뒤 두 방향으로 박스캐스트 수행
-        Vector3[] directions = { transform.forward, -transform.forward };
+        Transform closestNurse = null;
+        float closestDistance = Mathf.Infinity;
+        GameObject[] nurses = GameObject.FindGameObjectsWithTag(npcTag);
 
-        foreach (var direction in directions)
+        foreach (GameObject nurse in nurses)
         {
-            RaycastHit hit;
-
-            // 박스캐스트 수행
-            if (Physics.BoxCast(transform.position, boxCastSize / 2, direction, out hit, Quaternion.identity, boxCastDistance))
+            if(nurse.GetComponent<NurseController>().isWorking)
             {
-                Debug.Log("BoxCast hit: " + hit.collider.name); // BoxCast가 hit한 콜라이더의 이름 가져오기
+                continue;
+            }
+            // y축의 차이는 무시하고 x축과 z축의 차이만 계산
+            Vector3 offset = nurse.transform.position - origin;
+            offset.y = 0; // y축 차이 무시
 
-                // 충돌 지점에 작은 구를 그려서 시각적으로 확인
-                Debug.DrawRay(hit.point, Vector3.up * 1f, Color.green, 2f);
+            float distance = offset.magnitude;
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestNurse = nurse.transform;
+            }
+        }
 
-                // 충돌한 Collider를 가진 오브젝트와 그 부모 오브젝트들을 탐색하여 Person 컴포넌트를 찾음
-                Transform currentTransform = hit.collider.transform;
-
-                while (currentTransform != null)
+        if (closestNurse != null)
+        {
+            Person person = closestNurse.GetComponent<Person>();
+            if (person != null)
+            {
+                Debug.Log("Closest Nurse found: " + person.gameObject.name);
+                OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
+                outpatientController.nurseSignal = false;
+                outpatientController.StartCoroutine(outpatientController.WaitForNurse());
+                NurseController nurseController = person.gameObject.transform.GetComponent<NurseController>();
+                if(nurseController == null)
                 {
-                    if (currentTransform.CompareTag(npcTag))
-                    {
-                        Person person = currentTransform.GetComponent<Person>();
-                        if (person != null)
-                        {
-                            Debug.Log("NPC hit by BoxCast: " + person.gameObject.name); // 클릭된 NPC의 Person으로 이름 가져오기
-                            gameObject.GetComponent<OutpatientController>().Stop();
-                            //간호사에게 나의 위치를 알려주는 함수 호출
-                            person.gameObject.GetComponent<NurseManager>().FollowPatient(gameObject.transform.position);
-                            
-                            
-                        }
-                    }
-                    currentTransform = currentTransform.parent;
+                    Debug.LogError("nurseController를 찾을 수 없습니다.");
                 }
-
-                if (currentTransform == null)
+                else
                 {
-                    Debug.Log("No Person component found on the hit object or its parents.");
+                    nurseController.GoToPatient(gameObject);
                 }
             }
-            else
-            {
-                Debug.Log("BoxCast did not hit anything");
-            }
-            
+        }
+        else
+        {
+            Debug.Log("No Nurse found.");
         }
     }
-
 }

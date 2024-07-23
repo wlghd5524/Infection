@@ -6,6 +6,7 @@ TagManager:
   tags:
   - OutPatient
   - Doctor
+  - Nurse
   layers:
   - Default
   - TransparentFX

@@ -18,7 +18,9 @@ public class OutpatientController : MonoBehaviour
     // 상태 플래그
     public bool isWaiting = false;
     public bool isWaitingForDoctor = false;
-    public bool signal = false;
+    public bool isWaitingForNurse = false;
+    public bool doctorSignal = false;
+    public bool nurseSignal = false;
 
     // 씬 오브젝트 참조
     GameObject parentObject;
@@ -50,7 +52,7 @@ public class OutpatientController : MonoBehaviour
         UpdateAnimation();
 
         // 대기 중이면 이동 처리하지 않음
-        if (isWaiting || isWaitingForDoctor)
+        if (isWaiting || isWaitingForDoctor || isWaitingForNurse)
         {
             return;
         }
@@ -158,12 +160,24 @@ public class OutpatientController : MonoBehaviour
     private IEnumerator WaitForDoctorOffice(DoctorOffice doctorOffice)
     {
         isWaitingForDoctor = true;
-        while (!signal)
+        while (!doctorSignal)
         {
             yield return new WaitForSeconds(1);
         }
         doctorOffice.is_empty = false;
         isWaitingForDoctor = false;
+    }
+
+    //간호사가 올 때까지 대기 코루틴
+    public IEnumerator WaitForNurse()
+    {
+        agent.isStopped = true;
+        while(!nurseSignal)
+        {
+            yield return new WaitForSeconds(2.0f);
+        }
+        agent.isStopped = false;
+        
     }
 
     // 웨이포인트 추가 메서드
