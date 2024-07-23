@@ -20,15 +20,15 @@ public class NPCClickManager : MonoBehaviour
             {
                 continue;
             }
-            // y축의 차이는 무시하고 x축과 z축의 차이만 계산
-            Vector3 offset = nurse.transform.position - origin;
-            offset.y = 0; // y축 차이 무시
-
-            float distance = offset.magnitude;
-            if (distance < closestDistance)
+            // 같은 층에 있는지 확인
+            if (Mathf.Abs(origin.y - nurse.transform.position.y) <= 1.0f)
             {
-                closestDistance = distance;
-                closestNurse = nurse.transform;
+                float distance = Vector3.Distance(origin, nurse.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestNurse = nurse.transform;
+                }
             }
         }
 
