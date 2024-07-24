@@ -11,8 +11,6 @@ public class DoctorController : MonoBehaviour
     public bool isWaiting = false;
     public int patientCount = 0;
     public bool isResting = false;
-    //public static int patientMaxCount = 5;
-    public int age = 0;
     public bool signal = false;
 
     // Start is called before the first frame update

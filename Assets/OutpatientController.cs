@@ -258,8 +258,7 @@ public class OutpatientController : MonoBehaviour
         if (countDic.Count > 0)
         {
             DoctorOffice searchedOffice = countDic
-                .OrderBy(kvp => kvp.Key.doctor.GetComponent<DoctorController>().age)
-                .ThenBy(kvp => kvp.Value)
+                .OrderBy(kvp => kvp.Value)
                 .FirstOrDefault().Key;
             searchedOffice.waitingQueue.Enqueue(this);
             waypoints.Add(searchedOffice);
