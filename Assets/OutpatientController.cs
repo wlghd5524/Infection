@@ -16,6 +16,8 @@ public class OutpatientController : MonoBehaviour
     private static int[] officeCount = { 0, 0, 0, 0, 0, 0 };
 
     // 상태 플래그
+    public bool isQuarantined = false;
+    public bool isFollowingNurse = false;
     public bool isWaiting = false;
     public bool isWaitingForDoctor = false;
     public bool isWaitingForNurse = false;
@@ -26,6 +28,7 @@ public class OutpatientController : MonoBehaviour
     GameObject parentObject;
     GameObject gatewayObject;
     int randomWard;
+    public GameObject nurse;
 
     private void Awake()
     {
@@ -57,8 +60,23 @@ public class OutpatientController : MonoBehaviour
             return;
         }
 
+        if(isFollowingNurse)
+        {
+            isQuarantined = true;
+            float distance = Vector3.Distance(transform.position, nurse.transform.position);
+            if(distance > 1.0f)
+            {
+                agent.SetDestination(nurse.transform.position);
+            }
+            else
+            {
+                agent.ResetPath();
+            }
+        }
+
+
         // 목적지에 도착했는지 확인
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !isQuarantined)
         {
             if (waypointIndex == 4)
             {
@@ -252,6 +270,10 @@ public class OutpatientController : MonoBehaviour
             Debug.LogError("의사를 찾을 수 없습니다.");
         }
     }
+
+    
+
+
 
     // 이동 애니메이션 업데이트 코루틴
     private IEnumerator UpdateMovementAnimation()

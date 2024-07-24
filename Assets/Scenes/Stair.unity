@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -23689,41 +23690,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2125759126171874598, guid: abb888ec9b57c694ca42fa202d48a318, type: 3}
   m_PrefabInstance: {fileID: 937646465}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &938789403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 938789404}
-  m_Layer: 0
-  m_Name: NegativePressureRoomWaypoints
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &938789404
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938789403}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2002595068}
-  - {fileID: 1726514736}
-  - {fileID: 1372038597}
-  - {fileID: 1686405448}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &942712624
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35834,7 +35800,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 938789404}
+  m_Father: {fileID: 1740149364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1372038598
 MonoBehaviour:
@@ -42297,7 +42263,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 938789404}
+  m_Father: {fileID: 1740149364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1686405449
 MonoBehaviour:
@@ -43121,7 +43087,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 938789404}
+  m_Father: {fileID: 1740149364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1726514737
 MonoBehaviour:
@@ -43428,6 +43394,10 @@ Transform:
   m_Children:
   - {fileID: 1516744515}
   - {fileID: 552306584}
+  - {fileID: 2002595068}
+  - {fileID: 1726514736}
+  - {fileID: 1372038597}
+  - {fileID: 1686405448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1744725550
@@ -50522,7 +50492,7 @@ GameObject:
   - component: {fileID: 2002595070}
   - component: {fileID: 2002595069}
   m_Layer: 0
-  m_Name: N-PRoom
+  m_Name: N-PRoom (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 1
@@ -50541,7 +50511,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 938789404}
+  m_Father: {fileID: 1740149364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2002595069
 MonoBehaviour:
@@ -54086,4 +54056,3 @@ SceneRoots:
   - {fileID: 1819594404}
   - {fileID: 1740149364}
   - {fileID: 1068614957}
-  - {fileID: 938789404}

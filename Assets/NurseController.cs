@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -41,6 +42,10 @@ public class NurseController : MonoBehaviour
 
                 targetPatient.GetComponent<OutpatientController>().nurseSignal = true;
                 isWorking = false;
+                if(targetPatient.GetComponent<OutpatientController>().isQuarantined)
+                {
+                    StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatient));
+                }
             }
         }
     }
@@ -65,5 +70,23 @@ public class NurseController : MonoBehaviour
         obj1.transform.LookAt(obj2.transform.position);
         // obj2가 obj1을 바라보게 설정
         obj2.transform.LookAt(obj1.transform.position);
+    }
+
+    public void GoToNegativePressureRoom(GameObject patientGameObject)
+    {
+        GoToPatient(patientGameObject);
+        patientGameObject.GetComponent<OutpatientController>().isQuarantined = true;
+    }
+    public IEnumerator WaitAndGoToNegativePressureRoom(GameObject patientGameObject)
+    {
+        agent.isStopped = true;
+        yield return new WaitForSeconds(1);
+        agent.isStopped = false;
+        OutpatientController targetPatient = patientGameObject.GetComponent<OutpatientController>();
+        targetPatient.nurse = gameObject;
+        targetPatient.isFollowingNurse = true;
+        GameObject parentObject = GameObject.Find("NurseWaypoints");
+        Waypoint NPRoom = parentObject.transform.Find("N-PRoom (0)").GetComponent<Waypoint>();
+        agent.SetDestination(NPRoom.GetRandomPointInRange());
     }
 }

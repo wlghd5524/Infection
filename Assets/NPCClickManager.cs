@@ -8,7 +8,7 @@ public class NPCClickManager : MonoBehaviour
     public Vector3 boxCastSize = new Vector3(100f, 1f, 100f); // 박스캐스트 크기
     public string npcTag = "Nurse"; // Nurse 태그
 
-    public void SearchNurse(Vector3 origin)
+    public GameObject SearchNurse(Vector3 origin)
     {
         Transform closestNurse = null;
         float closestDistance = Mathf.Infinity;
@@ -31,30 +31,56 @@ public class NPCClickManager : MonoBehaviour
                 }
             }
         }
-
         if (closestNurse != null)
         {
             Person person = closestNurse.GetComponent<Person>();
             if (person != null)
             {
                 Debug.Log("Closest Nurse found: " + person.gameObject.name);
-                OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
-                outpatientController.nurseSignal = false;
-                outpatientController.StartCoroutine(outpatientController.WaitForNurse());
-                NurseController nurseController = person.gameObject.transform.GetComponent<NurseController>();
-                if(nurseController == null)
-                {
-                    Debug.LogError("nurseController를 찾을 수 없습니다.");
-                }
-                else
-                {
-                    nurseController.GoToPatient(gameObject);
-                }
+                
             }
         }
         else
         {
             Debug.Log("No Nurse found.");
+        }
+        return closestNurse.gameObject;
+        
+    }
+    public void WearingMask(GameObject closestNurse)
+    {
+        OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
+        outpatientController.nurseSignal = false;
+        outpatientController.StartCoroutine(outpatientController.WaitForNurse());
+        NurseController nurseController = closestNurse.GetComponent<NurseController>();
+        if (nurseController == null)
+        {
+            Debug.LogError("nurseController를 찾을 수 없습니다.");
+        }
+        else
+        {
+            nurseController.GoToPatient(gameObject);
+        }
+    }
+
+    public void Quarantine(GameObject closestNurse)
+    {
+        OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
+        outpatientController.nurseSignal = false;
+        outpatientController.StartCoroutine(outpatientController.WaitForNurse());
+        NurseController nurseController = closestNurse.GetComponent<NurseController>();
+        if (nurseController == null)
+        {
+            Debug.LogError("nurseController를 찾을 수 없습니다.");
+        }
+        else
+        {
+            //안전복 입기 코드
+
+
+            
+            nurseController.GoToNegativePressureRoom(gameObject);
+
         }
     }
 }

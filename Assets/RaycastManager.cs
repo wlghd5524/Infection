@@ -66,8 +66,16 @@ public class RaycastManager : MonoBehaviour
                     if (person != null)
                     {
                         Debug.Log("NPC clicked: " + person.gameObject.name);    // 클릭된 NPC의 Person으로 이름 가져오기
-                        if(person.gameObject.CompareTag("OutPatient"))
-                            currentTransform.GetComponent<NPCClickManager>().SearchNurse(person.gameObject.transform.position);
+                        NPCClickManager targetNPCCLickManager = currentTransform.GetComponent<NPCClickManager>();
+                        if (person.gameObject.CompareTag("OutPatient"))
+                        {
+                            //마스크 씌우기
+                            //targetNPCCLickManager.WearingMask(targetNPCCLickManager.SearchNurse(person.gameObject.transform.position));
+
+                            //음압실 데려가기
+                            targetNPCCLickManager.Quarantine(targetNPCCLickManager.SearchNurse(person.gameObject.transform.position));
+                        }
+                            
                         //UIManager.Instance.ToggleNPCInfo(person);
                         break;
                     }
