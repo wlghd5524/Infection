@@ -77,9 +77,12 @@ public class ObjectPoolingManager : MonoBehaviour
         for (int i = 0; i < maxOfNurse; i++)
         {
             // 간호사 스폰 위치 설정
-            Waypoint spawnArea = GameObject.Find("NurseWaypoints").transform.Find("Ward (" + (i / 20) + ")").transform.Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
+            int ward = i / 20;
+            Waypoint spawnArea = GameObject.Find("NurseWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
             GameObject newNurse = Instantiate(NursePrefabs[Random.Range(0, NursePrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
             newNurse.name = "Nurse " + i;
+            newNurse.GetComponent<NurseController>().ward = ward;
+            newNurse.GetComponent<NurseController>().isRest = true;
             newNurse.GetComponent<SkinnedMeshRenderer>().enabled = false;
         }
     }
@@ -133,6 +136,17 @@ public class ObjectPoolingManager : MonoBehaviour
     public GameObject ActivateNurse(GameObject newNurse)
     {
         newNurse.GetComponent<SkinnedMeshRenderer>().enabled = true; // 렌더러 활성화
+        newNurse.GetComponent<NurseController>().isRest = false;
         return newNurse;
+    }
+
+    public void DeactivateNurse(GameObject nurse)
+    {
+        nurse.GetComponent<SkinnedMeshRenderer>().enabled = false; // 렌더러 활성화
+        NurseController nurseController = nurse.GetComponent<NurseController>();
+        nurseController.isRest = true;
+        nurseController.isWaiting = false;
+        nurseController.isWaitingAtDoctorOffice = false;
+        nurseController.isWorking = false;
     }
 }

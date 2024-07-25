@@ -298,7 +298,7 @@ PrefabInstance:
     - target: {fileID: 8179998068213258533, guid: 48946a36098bc6e4aa778680b925d932, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a1489e5618e89594ab432e603b7c9b6a, type: 2}
+      objectReference: {fileID: 9100000, guid: f297797635a2b7445ad2ea55cec7353b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1997368759842962323, guid: 48946a36098bc6e4aa778680b925d932, type: 3}
@@ -852,4 +852,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWorking: 0
   isWaiting: 0
+  isRest: 0
+  isWaitingAtDoctorOffice: 0
   targetPatient: {fileID: 0}
+  waypoints: []
+  ward: 0

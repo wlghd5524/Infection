@@ -94,7 +94,7 @@ PrefabInstance:
     - target: {fileID: 4474494119397879864, guid: f517108549c89ba4b99ab658176482d7, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a1489e5618e89594ab432e603b7c9b6a, type: 2}
+      objectReference: {fileID: 9100000, guid: f297797635a2b7445ad2ea55cec7353b, type: 2}
     - target: {fileID: 7534491745796500768, guid: f517108549c89ba4b99ab658176482d7, type: 3}
       propertyPath: m_Name
       value: hospital_staff_nurse_B_1_WithItemAnimator
@@ -697,7 +697,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isWorking: 0
   isWaiting: 0
+  isRest: 0
+  isWaitingAtDoctorOffice: 0
   targetPatient: {fileID: 0}
+  waypoints: []
+  ward: 0
 --- !u!4 &2517037037990017664 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7534491745796993348, guid: f517108549c89ba4b99ab658176482d7, type: 3}

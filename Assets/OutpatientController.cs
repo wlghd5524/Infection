@@ -29,18 +29,19 @@ public class OutpatientController : MonoBehaviour
     GameObject gatewayObject;
     int randomWard;
     public GameObject nurse;
+    public NPRoom nPRoom;
 
     private void Awake()
     {
         // 컴포넌트 초기화
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        agent.avoidancePriority = Random.Range(0, 100);
+        agent.avoidancePriority = Random.Range(0, 1000);
 
         // 씬 오브젝트 찾기
         parentObject = GameObject.Find("OutPatientWaypoints");
         gatewayObject = GameObject.Find("Gateways");
-        randomWard = Random.Range(0, 2);
+        randomWard = Random.Range(0, 6);
     }
 
     private void OnEnable()
@@ -55,36 +56,30 @@ public class OutpatientController : MonoBehaviour
         UpdateAnimation();
 
         // 대기 중이면 이동 처리하지 않음
-        if (isWaiting || isWaitingForDoctor || isWaitingForNurse)
+        if (isWaiting)
         {
             return;
         }
 
-        if(isFollowingNurse)
-        {
-            isQuarantined = true;
-            float distance = Vector3.Distance(transform.position, nurse.transform.position);
-            if(distance > 1.0f)
-            {
-                agent.SetDestination(nurse.transform.position);
-            }
-            else
-            {
-                agent.ResetPath();
-            }
-        }
+        
 
 
         // 목적지에 도착했는지 확인
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && !isQuarantined)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
         {
-            if (waypointIndex == 4)
+            //if(isFollowingNurse)
+            //{
+            //    isFollowingNurse = false;
+            //    isQuarantined = true;
+            //}
+            if (waypointIndex == 4 && !isWaitingForNurse && !isFollowingNurse && !isQuarantined)
             {
                 // 모든 웨이포인트를 방문했으면 비활성화
                 ObjectPoolingManager.Instance.DeactivateOutpatient(gameObject);
                 OutpatientCreator.numberOfOutpatient--;
                 return;
             }
+            
             else
             {
                 // 다음 웨이포인트로 이동
@@ -126,12 +121,17 @@ public class OutpatientController : MonoBehaviour
         isWaiting = true;
         yield return new WaitForSeconds(1.5f);
         isWaiting = false;
-
+        if (isQuarantined)
+        {
+            agent.SetDestination(nPRoom.GetRandomPointInRange());
+            yield break;
+        }
         // 현재 웨이포인트 인덱스에 따라 다음 웨이포인트 추가
         AddNextWaypoint();
 
         if (waypointIndex < waypoints.Count)
         {
+            
             // 의사 사무실인 경우 대기
             if (waypoints[waypointIndex] is DoctorOffice doctorOffice)
             {
@@ -148,6 +148,7 @@ public class OutpatientController : MonoBehaviour
                 agent.SetDestination(waypoints[waypointIndex++].GetRandomPointInRange());
                 StartCoroutine(UpdateMovementAnimation());
             }
+            
         }
     }
 
@@ -270,7 +271,29 @@ public class OutpatientController : MonoBehaviour
         }
     }
 
-    
+    public IEnumerator FollowNurse(GameObject nurse)
+    {
+        //isWaiting = true;
+        //yield return new WaitForSeconds(1.0f);
+        //isWaiting = false;
+        this.nurse = nurse;
+        isFollowingNurse = true;
+        while(isFollowingNurse == true)
+        {
+            agent.SetDestination(nurse.transform.position);
+            yield return new WaitForSeconds(0.1f);
+        }
+        agent.ResetPath();
+        //float distance = Vector3.Distance(transform.position, nurse.transform.position);
+        //if (distance > 1.0f)
+        //{
+        //    agent.SetDestination(nurse.transform.position);
+        //}
+        //else
+        //{
+        //    agent.ResetPath();
+        //}
+    }
 
 
 

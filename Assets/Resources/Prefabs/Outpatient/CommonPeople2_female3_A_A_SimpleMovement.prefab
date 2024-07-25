@@ -695,11 +695,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waypoints: []
   waypointIndex: 0
+  isQuarantined: 0
+  isFollowingNurse: 0
   isWaiting: 0
   isWaitingForDoctor: 0
   isWaitingForNurse: 0
   doctorSignal: 0
   nurseSignal: 0
+  nurse: {fileID: 0}
+  nPRoom: {fileID: 0}
 --- !u!114 &-3300461458590420104
 MonoBehaviour:
   m_ObjectHideFlags: 0

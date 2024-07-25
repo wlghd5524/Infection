@@ -27,12 +27,4 @@ public class DoctorOffice : Waypoint
             }
         }
     }
-    public void enter(OutpatientController outpatient)
-    {
-        waitingQueue.Enqueue(outpatient);
-    }
-    public void exit()
-    {
-        is_empty = true;
-    }
 }
