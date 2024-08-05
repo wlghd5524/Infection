@@ -102,7 +102,7 @@ public class NurseController : MonoBehaviour
     private Vector3 GetPositionInFront(Transform targetTransform, float distance)
     {
         Vector3 direction = targetTransform.forward; // 타겟의 전방 방향
-        Vector3 destination = targetTransform.position + direction * distance; // 목적지 계산
+        Vector3 destination = targetTransform.position + (direction * distance); // 목적지 계산
         NavMeshHit navHit;
         NavMesh.SamplePosition(destination, out navHit, distance, -1); // 네비게이션 메시 상의 위치 샘플링
         return navHit.position;

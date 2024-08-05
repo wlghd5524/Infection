@@ -11,7 +11,10 @@ public class DoctorController : MonoBehaviour
     public bool isWaiting = false;
     public int patientCount = 0;
     public bool isResting = false;
-    public bool signal = false;
+    public bool changeSignal = false;
+    public bool outpatientSignal = false;
+
+    public GameObject outpatient;
 
     // Start is called before the first frame update
     private void Awake()
@@ -49,7 +52,16 @@ public class DoctorController : MonoBehaviour
         {
             return;
         }
-        StartCoroutine(MoveToNextWaypointAfterWait());
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
+        {
+            if(outpatientSignal)
+            {
+                outpatient.GetComponent<OutpatientController>().doctorSignal = true;
+                return;
+            }
+            StartCoroutine(MoveToNextWaypointAfterWait());
+        }
+            
 
     }
     private IEnumerator MoveToNextWaypointAfterWait()
@@ -58,6 +70,8 @@ public class DoctorController : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
         isWaiting = false;
 
+
+
         if (!agent.isOnNavMesh)
         {
             Debug.LogError("NavMeshAgent가 내비게이션 준비가 되지 않았습니다. 활성화 상태, 활성화 여부, NavMesh 위치 여부를 확인하세요.");
@@ -65,13 +79,13 @@ public class DoctorController : MonoBehaviour
 
         if (waypoints[1] is DoctorOffice doctorOffice)
         {
-            if (doctorOffice.is_empty)
+            if (!outpatientSignal)
             {
                 agent.SetDestination(waypoints[0].GetRandomPointInRange());
             }
             else
             {
-                agent.SetDestination(waypoints[1].GetRandomPointInRange());
+                agent.SetDestination(GetPositionInFront(outpatient.transform, 0.75f));
             }
         }
         StartCoroutine(UpdateMovementAnimation());
@@ -116,11 +130,19 @@ public class DoctorController : MonoBehaviour
     public IEnumerator Rest()
     {
         isResting = true;
-        if(!signal)
+        if(!changeSignal)
         {
             yield return new WaitForSeconds(1);
         }
         isResting = false;
-        signal = false;
+        changeSignal = false;
+    }
+    private Vector3 GetPositionInFront(Transform targetTransform, float distance)
+    {
+        Vector3 direction = targetTransform.forward; // 타겟의 전방 방향
+        Vector3 destination = targetTransform.position + (direction * distance); // 목적지 계산
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(destination, out navHit, distance, -1); // 네비게이션 메시 상의 위치 샘플링
+        return navHit.position;
     }
 }

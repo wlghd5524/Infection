@@ -117,7 +117,7 @@ public class ObjectPoolingManager : MonoBehaviour
         doctorController.patientCount = 0; // 환자 수 초기화
         doctorController.isWaiting = false; // 대기 상태 초기화
         doctorController.isResting = true; // 휴식 상태 설정
-        doctorController.signal = false; // 신호 초기화
+        doctorController.changeSignal = false; // 신호 초기화
         doctor.GetComponent<SkinnedMeshRenderer>().enabled = false; // 렌더러 비활성화
     }
 
@@ -125,7 +125,7 @@ public class ObjectPoolingManager : MonoBehaviour
     public GameObject ActivateDoctor(GameObject newDoctor)
     {
         DoctorController doctorController = newDoctor.GetComponent<DoctorController>();
-        doctorController.signal = true; // 신호 설정
+        doctorController.changeSignal = true; // 신호 설정
         newDoctor.transform.position = doctorController.waypoints[0].GetRandomPointInRange(); // 위치 설정
         newDoctor.GetComponent<SkinnedMeshRenderer>().enabled = true; // 렌더러 활성화
         doctorController.isResting = false; // 휴식 상태 해제

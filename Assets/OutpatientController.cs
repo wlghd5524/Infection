@@ -20,8 +20,9 @@ public class OutpatientController : MonoBehaviour
     public bool isWaiting = false;
     public bool isWaitingForDoctor = false;
     public bool isWaitingForNurse = false;
-    public bool doctorSignal = false;
+    public bool officeSignal = false;
     public bool nurseSignal = false;
+    public bool doctorSignal = false;
 
     // 씬 오브젝트 참조
     GameObject parentObject;
@@ -117,6 +118,13 @@ public class OutpatientController : MonoBehaviour
     // 다음 웨이포인트로 이동하는 코루틴
     private IEnumerator MoveToNextWaypointAfterWait()
     {
+        if (waypointIndex > 0 && waypoints[waypointIndex - 1] is DoctorOffice docOffice)
+        {
+            docOffice.doctor.GetComponent<DoctorController>().outpatient = gameObject;
+            docOffice.doctor.GetComponent<DoctorController>().outpatientSignal = true;
+            yield return new WaitUntil(() => doctorSignal);
+            FaceEachOther(docOffice.doctor, gameObject);
+        }
         isWaiting = true;
         yield return new WaitForSeconds(1.5f);
         isWaiting = false;
@@ -139,6 +147,7 @@ public class OutpatientController : MonoBehaviour
             else if (waypointIndex > 0 && waypoints[waypointIndex - 1] is DoctorOffice doc)
             {
                 doc.is_empty = true;
+                doc.doctor.GetComponent<DoctorController>().outpatientSignal = false;
             }
 
             // 다음 웨이포인트로 이동
@@ -178,7 +187,10 @@ public class OutpatientController : MonoBehaviour
     private IEnumerator WaitForDoctorOffice(DoctorOffice doctorOffice)
     {
         isWaitingForDoctor = true;
-        yield return new WaitUntil(() => doctorSignal);
+        while(!officeSignal)
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
         doctorOffice.is_empty = false;
         isWaitingForDoctor = false;
     }
@@ -299,5 +311,11 @@ public class OutpatientController : MonoBehaviour
             yield return null;
         }
     }
+    private void FaceEachOther(GameObject obj1, GameObject obj2)
+    {
+        obj1.transform.LookAt(obj2.transform.position); // obj1이 obj2를 바라보게 설정
+        obj2.transform.LookAt(obj1.transform.position); // obj2가 obj1을 바라보게 설정
+    }
+
 
 }
