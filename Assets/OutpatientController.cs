@@ -13,7 +13,6 @@ public class OutpatientController : MonoBehaviour
     // 웨이포인트 관련 변수
     public List<Waypoint> waypoints = new List<Waypoint>();
     public int waypointIndex = 0;
-    private static int[] officeCount = { 0, 0, 0, 0, 0, 0 };
 
     // 상태 플래그
     public bool isQuarantined = false;
@@ -179,10 +178,7 @@ public class OutpatientController : MonoBehaviour
     private IEnumerator WaitForDoctorOffice(DoctorOffice doctorOffice)
     {
         isWaitingForDoctor = true;
-        while (!doctorSignal)
-        {
-            yield return new WaitForSeconds(1);
-        }
+        yield return new WaitUntil(() => doctorSignal);
         doctorOffice.is_empty = false;
         isWaitingForDoctor = false;
     }
@@ -191,10 +187,7 @@ public class OutpatientController : MonoBehaviour
     public IEnumerator WaitForNurse()
     {
         agent.isStopped = true;
-        while(!nurseSignal)
-        {
-            yield return new WaitForSeconds(2.0f);
-        }
+        yield return new WaitUntil(() => nurseSignal);
         agent.isStopped = false;
         
     }

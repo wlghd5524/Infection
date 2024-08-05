@@ -89,10 +89,10 @@ public class NurseController : MonoBehaviour
         targetPatientController.nurseSignal = true; // 환자에게 간호사가 도착했음을 알림
         //targetPatientController.nurse = gameObject; // 간호사 설정
         targetPatientController.StartCoroutine(targetPatientController.FollowNurse(gameObject));
-        
+        agent.speed -= 1;
         yield return StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatientController)); // 격리된 환자라면 음압실로 이동
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
-
+        agent.speed += 1;
         isWorking = false;
         targetPatientController.isFollowingNurse = false;
         targetPatientController.isQuarantined = true;
