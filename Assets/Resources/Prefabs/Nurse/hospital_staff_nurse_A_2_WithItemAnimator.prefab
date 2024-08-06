@@ -327,15 +327,6 @@ PrefabInstance:
       addedObject: {fileID: 2475170809163764198}
     - targetCorrespondingSourceObject: {fileID: 2351147194647691815, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 406486697647934175}
-    - targetCorrespondingSourceObject: {fileID: 2351147194647691815, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2132659440633301058}
-    - targetCorrespondingSourceObject: {fileID: 2351147194647691815, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7304758188548564056}
-    - targetCorrespondingSourceObject: {fileID: 2351147194647691815, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4490109992876216357}
     - targetCorrespondingSourceObject: {fileID: 2351147194647691815, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
       insertIndex: -1
@@ -644,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e97cff33055e64e973cf2121c8502b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_croucher: {fileID: 7304758188548564056}
+  m_croucher: {fileID: 0}
   m_aimScript: {fileID: 0}
   m_itemScriptL: {fileID: 0}
   m_itemScriptR: {fileID: 0}
@@ -652,53 +643,6 @@ MonoBehaviour:
   m_handBoneR: {fileID: 3448013817274678688}
   m_itemInHandL: {fileID: 0}
   m_itemInHandR: {fileID: 0}
---- !u!114 &406486697647934175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3448013817274704324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24ff2c575df4dc446917e4dca941d6c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animator: {fileID: 6142829066975927183}
-  m_relativeAimController: {fileID: 0}
-  m_directAimController: {fileID: 0}
-  m_characterMovement: {fileID: 0}
-  m_strafer: {fileID: 2132659440633301058}
---- !u!114 &2132659440633301058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3448013817274704324}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dafca7200a8c15408ad1fcd81578235, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_moveSpeed: 0
-  m_jumpForce: 4
-  m_animator: {fileID: 6142829066975927183}
-  m_rigidBody: {fileID: 4602557905714282585}
-  CanMove: 1
---- !u!114 &7304758188548564056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3448013817274704324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49e2e99df24f6ca4d886612012190511, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_animator: {fileID: 6142829066975927183}
 --- !u!137 &4490109992876216357
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -852,8 +796,3 @@ MonoBehaviour:
   targetPatient: {fileID: 0}
   waypoints: []
   ward: 0
---- !u!95 &6142829066975927183 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 6505040485670107244, guid: ab97ccabef9348c46b00ab5ded832f36, type: 3}
-  m_PrefabInstance: {fileID: 1114990169161589731}
-  m_PrefabAsset: {fileID: 0}

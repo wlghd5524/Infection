@@ -122,6 +122,7 @@ public class OutpatientController : MonoBehaviour
         {
             docOffice.doctor.GetComponent<DoctorController>().outpatient = gameObject;
             docOffice.doctor.GetComponent<DoctorController>().outpatientSignal = true;
+            yield return new WaitForSeconds(1.0f);
             yield return new WaitUntil(() => doctorSignal);
             FaceEachOther(docOffice.doctor, gameObject);
         }

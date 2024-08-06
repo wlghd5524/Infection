@@ -7,7 +7,7 @@ public class PrefabModify : MonoBehaviour
     [MenuItem("Tools/Transfer SkinnedMeshRenderer In Folder")]
     public static void TransferSkinnedMeshRendererInFolder()
     {
-        string folderPath = "Assets/Resources/Prefabs/Nurse"; // 변경할 폴더 경로를 지정하세요.
+        string folderPath = "Assets/Resources/Prefabs/Doctors"; // 변경할 폴더 경로를 지정하세요.
 
         string[] guids = AssetDatabase.FindAssets("t:Prefab", new[] { folderPath });
 
