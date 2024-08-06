@@ -64,14 +64,5 @@ public class InpatientController : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(1.0f,2.0f));
         isWaiting = false;
         agent.SetDestination(waypoints[Random.Range(0,waypoints.Count)].GetRandomPointInRange());
-        StartCoroutine(UpdateMovementAnimation());
-    }
-    private IEnumerator UpdateMovementAnimation()
-    {
-        while (true)
-        {
-            animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-            yield return null;
-        }
     }
 }

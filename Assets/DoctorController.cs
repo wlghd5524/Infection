@@ -85,7 +85,6 @@ public class DoctorController : MonoBehaviour
                 outpatient.GetComponent<OutpatientController>().doctorSignal = true;
             }
         }
-        StartCoroutine(UpdateMovementAnimation());
     }
     private void UpdateAnimation()
     {
@@ -115,14 +114,6 @@ public class DoctorController : MonoBehaviour
 
         if (animator.GetBool("Grounded") != (!agent.isOnOffMeshLink && agent.isOnNavMesh))
             animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
-    }
-    private IEnumerator UpdateMovementAnimation()
-    {
-        while (true)
-        {
-            animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-            yield return null;
-        }
     }
     public IEnumerator Rest()
     {

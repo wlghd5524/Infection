@@ -120,8 +120,9 @@ public class OutpatientController : MonoBehaviour
     {
         if (waypointIndex > 0 && waypoints[waypointIndex - 1] is DoctorOffice docOffice)
         {
-            docOffice.doctor.GetComponent<DoctorController>().outpatient = gameObject;
-            docOffice.doctor.GetComponent<DoctorController>().outpatientSignal = true;
+            DoctorController targetDoctor = docOffice.doctor.GetComponent<DoctorController>();
+            targetDoctor.outpatient = gameObject;
+            targetDoctor.outpatientSignal = true;
             yield return new WaitForSeconds(1.0f);
             yield return new WaitUntil(() => doctorSignal);
             FaceEachOther(docOffice.doctor, gameObject);
@@ -155,7 +156,6 @@ public class OutpatientController : MonoBehaviour
             if (!isWaitingForDoctor)
             {
                 agent.SetDestination(waypoints[waypointIndex++].GetRandomPointInRange());
-                StartCoroutine(UpdateMovementAnimation());
             }
             
         }
@@ -301,17 +301,6 @@ public class OutpatientController : MonoBehaviour
         //}
     }
 
-
-
-    // 이동 애니메이션 업데이트 코루틴
-    private IEnumerator UpdateMovementAnimation()
-    {
-        while (true)
-        {
-            animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-            yield return null;
-        }
-    }
     private void FaceEachOther(GameObject obj1, GameObject obj2)
     {
         obj1.transform.LookAt(obj2.transform.position); // obj1이 obj2를 바라보게 설정

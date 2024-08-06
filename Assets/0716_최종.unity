@@ -2281,7 +2281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8b93c221899104ba8387ae8c7502fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxOfOutpatient: 250
+  maxOfOutpatient: 100
   maxOfDoctor: 30
   maxOfNurse: 120
 --- !u!4 &159629732
