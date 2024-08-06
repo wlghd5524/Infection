@@ -21,6 +21,10 @@ public class DoctorOffice : Waypoint
             if (next.isWaitingForDoctor)
             {
                 next = waitingQueue.Dequeue();
+                if(next.isQuarantined || next.isWaitingForNurse || next.isFollowingNurse)
+                {
+                    return;
+                }
                 doctor.GetComponent<StressController>().stress += (++doctor.GetComponent<DoctorController>().patientCount / 10) + 1;
                 is_empty = false;
                 next.officeSignal = true;

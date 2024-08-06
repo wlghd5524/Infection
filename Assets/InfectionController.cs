@@ -18,7 +18,7 @@ public class InfectionController : MonoBehaviour
         Person otherPerson = other.GetComponent<Person>();
         if(delayList.Contains(otherPerson))
         {
-            Debug.Log("이미 접촉된 사람");
+            //Debug.Log("이미 접촉된 사람");
             return;
         }
         if (otherPerson.status != InfectionState.Normal)
@@ -30,12 +30,12 @@ public class InfectionController : MonoBehaviour
         int totalRandom = Random.Range(0, 101);
         if (random - otherPerson.infectionResistance >= totalRandom)
         {
-            Debug.Log(random - otherPerson.infectionResistance + " 값이 나왔기 때문에 감염됨");
+            //Debug.Log(random - otherPerson.infectionResistance + " 값이 나왔기 때문에 감염됨");
             otherPerson.ChangeStatus(thisPersonStatus);
         }
         else
         {
-            Debug.Log(random - otherPerson.infectionResistance + "값이 나왔기 때문에 감염되지 않음");
+            //Debug.Log(random - otherPerson.infectionResistance + "값이 나왔기 때문에 감염되지 않음");
         }
         delayList.Add(otherPerson);
         StartCoroutine(CoRemoveDelay(otherPerson));

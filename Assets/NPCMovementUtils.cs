@@ -43,4 +43,20 @@ public class NPCMovementUtils : MonoBehaviour
         if (animator.GetBool("Grounded") != (!agent.isOnOffMeshLink && agent.isOnNavMesh))
             animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
     }
+
+    public Vector3 GetPositionInFront(Transform thisTransform, Transform targetTransform, float distance)
+    {
+        // 대상 오브젝트와 현재 오브젝트 사이의 방향 벡터를 구함
+        Vector3 direction = -(targetTransform.position - thisTransform.position).normalized;
+
+        // 대상 오브젝트의 위치로부터 그 방향으로 일정 거리만큼 떨어진 위치 계산
+        Vector3 destination = targetTransform.position + (direction * distance);
+
+        // 네비게이션 메시 상의 위치 샘플링
+        NavMeshHit navHit;
+        NavMesh.SamplePosition(destination, out navHit, distance, NavMesh.AllAreas);
+
+        // 샘플링된 위치 반환
+        return navHit.position;
+    }
 }

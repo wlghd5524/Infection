@@ -59,12 +59,12 @@ public class NurseController : MonoBehaviour
     public IEnumerator GoToPatient(GameObject patientGameObject)
     {
         isWorking = true; // 일하는 중으로 설정
-        Vector3 nearRandomPosition = GetPositionInFront(patientGameObject.transform, 1); // 환자 앞의 임의 위치 계산
-        agent.SetDestination(nearRandomPosition); // 에이전트 목적지 설정
+        Vector3 targetPatientPosition = NPCMovementUtils.Instance.GetPositionInFront(transform, patientGameObject.transform, 0.5f); // 환자 앞의 임의 위치 계산
+        agent.SetDestination(targetPatientPosition); // 에이전트 목적지 설정
         targetPatient = patientGameObject; // 타겟 환자 설정
 
         yield return new WaitUntil(() => !agent.pathPending);
-        yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
+        yield return new WaitUntil(() => agent.remainingDistance == 0);
 
         NPCMovementUtils.Instance.FaceEachOther(gameObject, targetPatient); // 간호사와 환자가 서로를 바라보게 설정
         OutpatientController targetPatientController = targetPatient.GetComponent<OutpatientController>();
@@ -80,15 +80,6 @@ public class NurseController : MonoBehaviour
         targetPatientController.isQuarantined = true;
     }
 
-    // 타겟 앞의 임의 위치 계산
-    private Vector3 GetPositionInFront(Transform targetTransform, float distance)
-    {
-        Vector3 direction = targetTransform.forward; // 타겟의 전방 방향
-        Vector3 destination = targetTransform.position + (direction * distance); // 목적지 계산
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(destination, out navHit, distance, -1); // 네비게이션 메시 상의 위치 샘플링
-        return navHit.position;
-    }
 
 
     // 음압실로 이동

@@ -81,33 +81,6 @@ public class OutpatientController : MonoBehaviour
         }
     }
 
-    // 애니메이션 업데이트 메서드
-    private void UpdateAnimation()
-    {
-        // NavMesh 상에 없으면 애니메이션 정지
-        if (!agent.isOnNavMesh)
-        {
-            if (animator.GetFloat("MoveSpeed") != 0)
-                animator.SetFloat("MoveSpeed", 0);
-            if (animator.GetBool("Grounded"))
-                animator.SetBool("Grounded", false);
-            return;
-        }
-
-        // 이동 중 애니메이션
-        if (agent.remainingDistance > agent.stoppingDistance)
-        {
-            animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-        }
-        else
-        {
-            animator.SetFloat("MoveSpeed", 0);
-        }
-
-        // 지면 접촉 상태 업데이트
-        animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
-    }
-
     // 다음 웨이포인트로 이동하는 코루틴
     private IEnumerator MoveToNextWaypointAfterWait()
     {
@@ -224,7 +197,6 @@ public class OutpatientController : MonoBehaviour
                 if (!waypoints.Contains(comp))
                 {
                     waypoints.Add(comp);
-                    Debug.Log($"Added waypoint: {childName}");
                 }
             }
         }

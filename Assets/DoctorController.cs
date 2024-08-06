@@ -30,13 +30,14 @@ public class DoctorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 애니메이션
-        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
-
         if (isResting)
         {
             return;
         }
+        // 애니메이션
+        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
+
+        
 
         //if (patientCount >= patientMaxCount && waypoints[1] is DoctorOffice doctorOffice)
         //{
@@ -80,7 +81,8 @@ public class DoctorController : MonoBehaviour
             }
             else
             {
-                agent.SetDestination(GetPositionInFront(outpatient.transform, 0.75f));
+                Vector3 outpatientLocation = NPCMovementUtils.Instance.GetPositionInFront(transform, outpatient.transform, 0.75f);
+                agent.SetDestination(outpatientLocation);
                 yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f);
                 outpatient.GetComponent<OutpatientController>().doctorSignal = true;
             }
@@ -95,20 +97,5 @@ public class DoctorController : MonoBehaviour
         }
         isResting = false;
         changeSignal = false;
-    }
-    private Vector3 GetPositionInFront(Transform targetTransform, float distance)
-    {
-        // 대상 오브젝트와 현재 오브젝트 사이의 방향 벡터를 구함
-        Vector3 direction = -(targetTransform.position - transform.position).normalized;
-
-        // 대상 오브젝트의 위치로부터 그 방향으로 일정 거리만큼 떨어진 위치 계산
-        Vector3 destination = targetTransform.position + (direction * distance);
-
-        // 네비게이션 메시 상의 위치 샘플링
-        NavMeshHit navHit;
-        NavMesh.SamplePosition(destination, out navHit, distance, NavMesh.AllAreas);
-
-        // 샘플링된 위치 반환
-        return navHit.position;
     }
 }
