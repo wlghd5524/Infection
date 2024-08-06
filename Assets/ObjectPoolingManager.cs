@@ -97,6 +97,7 @@ public class ObjectPoolingManager : MonoBehaviour
         outpatientController.waypointIndex = 0; // 웨이포인트 인덱스 초기화
         outpatientController.doctorSignal = false; // 의사 신호 초기화
         outpatientController.nurseSignal = false; // 간호사 신호 초기화
+        outpatientController.officeSignal = false; // 진료실 신호 초기화
         outpatientQueue.Enqueue(outpatient); // 큐에 추가
         outpatient.SetActive(false); // 비활성화
     }

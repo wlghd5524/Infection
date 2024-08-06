@@ -20,6 +20,7 @@ public class OutpatientController : MonoBehaviour
     public bool isWaiting = false;
     public bool isWaitingForDoctor = false;
     public bool isWaitingForNurse = false;
+
     public bool officeSignal = false;
     public bool nurseSignal = false;
     public bool doctorSignal = false;
@@ -36,7 +37,7 @@ public class OutpatientController : MonoBehaviour
         // 컴포넌트 초기화
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        agent.avoidancePriority = Random.Range(0, 1000);
+        agent.avoidancePriority = Random.Range(0, 100);
 
         // 씬 오브젝트 찾기
         parentObject = GameObject.Find("OutPatientWaypoints");
@@ -53,7 +54,7 @@ public class OutpatientController : MonoBehaviour
     private void Update()
     {
         // 애니메이션 업데이트
-        UpdateAnimation();
+        NPCMovementUtils.Instance.UpdateAnimation(agent,animator);
 
         // 대기 중이면 이동 처리하지 않음
         if (isWaiting)
@@ -61,17 +62,9 @@ public class OutpatientController : MonoBehaviour
             return;
         }
 
-        
-
-
         // 목적지에 도착했는지 확인
         if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
         {
-            //if(isFollowingNurse)
-            //{
-            //    isFollowingNurse = false;
-            //    isQuarantined = true;
-            //}
             if (waypointIndex == 4 && !isWaitingForNurse && !isFollowingNurse && !isQuarantined)
             {
                 // 모든 웨이포인트를 방문했으면 비활성화
@@ -125,7 +118,7 @@ public class OutpatientController : MonoBehaviour
             targetDoctor.outpatientSignal = true;
             yield return new WaitForSeconds(1.0f);
             yield return new WaitUntil(() => doctorSignal);
-            FaceEachOther(docOffice.doctor, gameObject);
+            NPCMovementUtils.Instance.FaceEachOther(docOffice.doctor, gameObject);
         }
         isWaiting = true;
         yield return new WaitForSeconds(1.5f);
@@ -135,6 +128,7 @@ public class OutpatientController : MonoBehaviour
             agent.SetDestination(nPRoom.GetRandomPointInRange());
             yield break;
         }
+
         // 현재 웨이포인트 인덱스에 따라 다음 웨이포인트 추가
         AddNextWaypoint();
 
@@ -279,9 +273,6 @@ public class OutpatientController : MonoBehaviour
 
     public IEnumerator FollowNurse(GameObject nurse)
     {
-        //isWaiting = true;
-        //yield return new WaitForSeconds(1.0f);
-        //isWaiting = false;
         this.nurse = nurse;
         isFollowingNurse = true;
         while(isFollowingNurse == true)
@@ -290,22 +281,5 @@ public class OutpatientController : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         agent.ResetPath();
-        //float distance = Vector3.Distance(transform.position, nurse.transform.position);
-        //if (distance > 1.0f)
-        //{
-        //    agent.SetDestination(nurse.transform.position);
-        //}
-        //else
-        //{
-        //    agent.ResetPath();
-        //}
     }
-
-    private void FaceEachOther(GameObject obj1, GameObject obj2)
-    {
-        obj1.transform.LookAt(obj2.transform.position); // obj1이 obj2를 바라보게 설정
-        obj2.transform.LookAt(obj1.transform.position); // obj2가 obj1을 바라보게 설정
-    }
-
-
 }

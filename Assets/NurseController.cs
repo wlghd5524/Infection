@@ -12,7 +12,6 @@ public class NurseController : MonoBehaviour
     public bool isWorking = false; // 간호사가 일하는 중인지 여부
     public bool isWaiting = false; // 간호사가 기다리는 중인지 여부
     public bool isRest = false;
-    //public bool arriveNPRoom = false;
     public bool isWaitingAtDoctorOffice = false;
 
     public GameObject targetPatient; // 타겟 환자
@@ -23,7 +22,7 @@ public class NurseController : MonoBehaviour
     {
         animator = GetComponent<Animator>(); // 애니메이터 컴포넌트 할당
         agent = GetComponent<NavMeshAgent>(); // 네비게이션 에이전트 컴포넌트 할당
-        agent.avoidancePriority = Random.Range(0, 1000); // 에이전트 회피 우선순위 설정
+        agent.avoidancePriority = Random.Range(0, 100); // 에이전트 회피 우선순위 설정
     }
 
     // Start는 첫 프레임 업데이트 전에 호출됩니다.
@@ -36,7 +35,7 @@ public class NurseController : MonoBehaviour
     void Update()
     {
         // 애니메이션 업데이트
-        UpdateAnimation();
+        NPCMovementUtils.Instance.UpdateAnimation(agent,animator);
 
         if (isWaiting || isRest)
         {
@@ -48,23 +47,6 @@ public class NurseController : MonoBehaviour
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f))
         {
-            //if (isWorking)
-            //{
-            //    FaceEachOther(gameObject, targetPatient); // 간호사와 환자가 서로를 바라보게 설정
-            //    OutpatientController targetPatientController = targetPatient.GetComponent<OutpatientController>();
-            //    targetPatientController.nurseSignal = true; // 환자에게 간호사가 도착했음을 알림
-            //    targetPatientController.nurse = gameObject; // 간호사 설정
-            //    targetPatientController.isFollowingNurse = true; // 환자가 간호사를 따라가도록 설정
-            //    if (targetPatient.GetComponent<OutpatientController>().isFollowingNurse)
-            //    {
-            //        StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatient)); // 격리된 환자라면 음압실로 이동
-            //    }
-            //    if(targetPatient.GetComponent<OutpatientController>().isQuarantined)
-            //    {
-            //        isWorking = false;
-            //    }
-                
-            //}
             if(!isWorking)
             {
                 StartCoroutine(WaitAndGo()); // 다음 작업을 위해 대기 후 이동
@@ -84,7 +66,7 @@ public class NurseController : MonoBehaviour
         yield return new WaitUntil(() => !agent.pathPending);
         yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
 
-        FaceEachOther(gameObject, targetPatient); // 간호사와 환자가 서로를 바라보게 설정
+        NPCMovementUtils.Instance.FaceEachOther(gameObject, targetPatient); // 간호사와 환자가 서로를 바라보게 설정
         OutpatientController targetPatientController = targetPatient.GetComponent<OutpatientController>();
         targetPatientController.nurseSignal = true; // 환자에게 간호사가 도착했음을 알림
         //targetPatientController.nurse = gameObject; // 간호사 설정
@@ -108,12 +90,6 @@ public class NurseController : MonoBehaviour
         return navHit.position;
     }
 
-    // 두 객체가 서로를 바라보게 설정
-    private void FaceEachOther(GameObject obj1, GameObject obj2)
-    {
-        obj1.transform.LookAt(obj2.transform.position); // obj1이 obj2를 바라보게 설정
-        obj2.transform.LookAt(obj1.transform.position); // obj2가 obj1을 바라보게 설정
-    }
 
     // 음압실로 이동
     public void GoToNegativePressureRoom(GameObject patientGameObject)
@@ -156,7 +132,6 @@ public class NurseController : MonoBehaviour
         isWaiting = false; // 기다리는 중 해제
         if(waypoints.Count > 0)
         {
-
             if (waypoints.Count == 5)  //진료실 앞 대기 간호사들
             {
                 for(int i = 0;i<5;i++)
@@ -177,32 +152,5 @@ public class NurseController : MonoBehaviour
                 agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].GetRandomPointInRange()); // 랜덤 웨이포인트로 이동
             }
         }
-    }
-
-    // 애니메이션 업데이트 메서드
-    private void UpdateAnimation()
-    {
-        // NavMesh 상에 없으면 애니메이션 정지
-        if (!agent.isOnNavMesh)
-        {
-            if (animator.GetFloat("MoveSpeed") != 0)
-                animator.SetFloat("MoveSpeed", 0);
-            if (animator.GetBool("Grounded"))
-                animator.SetBool("Grounded", false);
-            return;
-        }
-
-        // 이동 중 애니메이션
-        if (agent.remainingDistance > agent.stoppingDistance)
-        {
-            animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-        }
-        else
-        {
-            animator.SetFloat("MoveSpeed", 0);
-        }
-
-        // 지면 접촉 상태 업데이트
-        animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
     }
 }

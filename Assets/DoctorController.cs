@@ -22,6 +22,7 @@ public class DoctorController : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
+        agent.avoidancePriority = Random.Range(0, 100);
         Person newDoctorPerson = gameObject.GetComponent<Person>();
         newDoctorPerson.role = Role.Doctor;
     }
@@ -29,9 +30,8 @@ public class DoctorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // 애니메이션
-        UpdateAnimation();
+        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
 
         if (isResting)
         {
@@ -85,35 +85,6 @@ public class DoctorController : MonoBehaviour
                 outpatient.GetComponent<OutpatientController>().doctorSignal = true;
             }
         }
-    }
-    private void UpdateAnimation()
-    {
-        // 애니메이션
-        if (!agent.isOnNavMesh)
-        {
-            if (animator.GetFloat("MoveSpeed") != 0)
-                animator.SetFloat("MoveSpeed", 0);
-            if (animator.GetBool("Grounded"))
-                animator.SetBool("Grounded", false);
-            return;
-        }
-
-        if (agent.remainingDistance > agent.stoppingDistance)
-        {
-            if (animator.GetFloat("MoveSpeed") != agent.velocity.magnitude / agent.speed)
-                animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-        }
-        else
-        {
-            if (animator.GetFloat("MoveSpeed") != 0)
-            {
-                animator.SetFloat("MoveSpeed", 0);
-            }
-
-        }
-
-        if (animator.GetBool("Grounded") != (!agent.isOnOffMeshLink && agent.isOnNavMesh))
-            animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
     }
     public IEnumerator Rest()
     {
