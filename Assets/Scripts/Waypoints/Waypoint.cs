@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    public bool is_empty = true;
     public Vector3 rangeSize; // 웨이포인트 범위의 크기
 
     // 범위 내에서 랜덤 위치를 반환

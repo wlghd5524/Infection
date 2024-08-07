@@ -9,60 +9,88 @@ public class InpatientController : MonoBehaviour
     private NavMeshAgent agent;
     public List<Waypoint> waypoints = new List<Waypoint>();
     private bool isWaiting = false;
+    public bool nurseSignal = false;
+    public GameObject bedWaypoint;
+    public int ward;
+    public GameObject nurse;
+    private int prevWaypointIndex;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        GameObject parentObject = GameObject.Find("InpatientWaypoints");
-        Transform waypointTransform = parentObject.transform.Find("InpatientWaypoint (");
-        waypoints.Add(waypointTransform.gameObject.GetComponent<Waypoint>());
-        waypointTransform = parentObject.transform.Find("ToiletWaypoint (" + (InpatientCreator.numberOfInpatient - 1) / 6 + ")");
-        waypoints.Add(waypointTransform.gameObject.GetComponent<Waypoint>());
-        parentObject = GameObject.Find("OutpatientWaypoints");
-        waypointTransform = parentObject.transform.Find("");
+        waypoints.Add(bedWaypoint.GetComponent<Waypoint>());
+        waypoints[0].is_empty = false;
+        Transform waypointTransform = bedWaypoint.transform.parent;
+        waypoints.Add(waypointTransform.Find("ToiletWaypoint").gameObject.GetComponent<Waypoint>());
+        for(int i = 0;i<3;i++)
+        {
+            waypoints.Add(waypointTransform.Find("VendingMachineWaypoint (" + i + ")").gameObject.GetComponent<Waypoint>());
+        }
+        waypoints.Add(GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("CounterWaypoint (0)").gameObject.GetComponent<Waypoint>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isWaiting)
-        {
-            return;
-        }
-        StartCoroutine(MoveToNextWaypointAfterWait());
         // 애니메이션
-        if (!agent.isOnNavMesh)
+        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
+        if (isWaiting)
         {
-            if (animator.GetFloat("MoveSpeed") != 0)
-                animator.SetFloat("MoveSpeed", 0);
-            if (animator.GetBool("Grounded"))
-                animator.SetBool("Grounded", false);
             return;
         }
-
-        if (agent.remainingDistance > agent.stoppingDistance)
-        {
-            if (animator.GetFloat("MoveSpeed") != agent.velocity.magnitude / agent.speed)
-                animator.SetFloat("MoveSpeed", agent.velocity.magnitude / agent.speed);
-        }
-        else
-        {
-            if (animator.GetFloat("MoveSpeed") != 0)
-            {
-                animator.SetFloat("MoveSpeed", 0);
-            }
-
-        }
-
-        if (animator.GetBool("Grounded") != (!agent.isOnOffMeshLink && agent.isOnNavMesh))
-            animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
+        // 목적지에 도착했는지 확인
+        if (NPCMovementUtils.Instance.isArrived(agent))
+            StartCoroutine(MoveToNextWaypointAfterWait());
     }
     private IEnumerator MoveToNextWaypointAfterWait()
     {
+
+        if (prevWaypointIndex == 1)
+        {
+            waypoints[1].is_empty = true;
+        }
+
         isWaiting = true;
-        yield return new WaitForSeconds(Random.Range(1.0f,2.0f));
+        yield return new WaitForSeconds(2.0f);
         isWaiting = false;
-        agent.SetDestination(waypoints[Random.Range(0,waypoints.Count)].GetRandomPointInRange());
+        
+        float random = Random.Range(1, 101);
+        if(random <= 85)
+        {
+            agent.SetDestination(waypoints[0].GetRandomPointInRange());
+            yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
+            waypoints[0].is_empty = false;
+            prevWaypointIndex = 0;
+        }
+        else if(random <= 90 && waypoints[1].is_empty)
+        {
+            waypoints[0].is_empty = true;
+            waypoints[1].is_empty = false;
+            agent.SetDestination(waypoints[1].GetRandomPointInRange());
+            prevWaypointIndex = 1;
+        }
+        else if(random <= 95)
+        {
+            waypoints[0].is_empty = true;
+            agent.SetDestination(waypoints[Random.Range(2, 5)].GetRandomPointInRange());
+            prevWaypointIndex = 2;
+        }
+        else
+        {
+            waypoints[0].is_empty = true;
+            agent.SetDestination(waypoints[5].GetRandomPointInRange());
+            prevWaypointIndex = 5;
+        }
+    }
+
+
+    //간호사가 올 때까지 대기 코루틴
+    public IEnumerator WaitForNurse()
+    {
+        agent.isStopped = true;
+        yield return new WaitUntil(() => nurseSignal);
+        yield return new WaitForSeconds(2.0f);
+        agent.isStopped = false;
     }
 }

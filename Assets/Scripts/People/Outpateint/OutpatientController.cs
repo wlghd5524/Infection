@@ -40,7 +40,7 @@ public class OutpatientController : MonoBehaviour
         agent.avoidancePriority = Random.Range(0, 100);
 
         // 씬 오브젝트 찾기
-        parentObject = GameObject.Find("OutPatientWaypoints");
+        parentObject = GameObject.Find("OutpatientWaypoints");
         gatewayObject = GameObject.Find("Gateways");
         randomWard = Random.Range(0, 6);
     }
@@ -63,7 +63,7 @@ public class OutpatientController : MonoBehaviour
         }
 
         // 목적지에 도착했는지 확인
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
+        if (NPCMovementUtils.Instance.isArrived(agent))
         {
             if (waypointIndex == 4 && !isWaitingForNurse && !isFollowingNurse && !isQuarantined)
             {
@@ -115,8 +115,10 @@ public class OutpatientController : MonoBehaviour
             }
             else if (waypointIndex > 0 && waypoints[waypointIndex - 1] is DoctorOffice doc)
             {
+                DoctorController doctorController = doc.doctor.GetComponent<DoctorController>();
                 doc.is_empty = true;
-                doc.doctor.GetComponent<DoctorController>().outpatientSignal = false;
+                doc.doctor.GetComponent<StressController>().stress += (++doctorController.patientCount / 10) + 1;
+                doctorController.outpatientSignal = false;
             }
 
             // 다음 웨이포인트로 이동
@@ -169,7 +171,6 @@ public class OutpatientController : MonoBehaviour
         agent.isStopped = true;
         yield return new WaitUntil(() => nurseSignal);
         agent.isStopped = false;
-        
     }
 
     // 웨이포인트 추가 메서드

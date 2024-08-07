@@ -10,12 +10,16 @@ public class InfectionController : MonoBehaviour
     {
         InfectionState thisPersonStatus = GetComponent<Person>().status;
         // 충돌한 오브젝트의 레이어가 지정된 레이어 마스크에 포함되어 있는지 확인
-        if (((1 << other.gameObject.layer) & layerMask) == 0 || other.gameObject == gameObject || thisPersonStatus == InfectionState.Normal)
+        if (other.gameObject == gameObject || thisPersonStatus == InfectionState.Normal)
         {
             return;
         }
 
         Person otherPerson = other.GetComponent<Person>();
+        if(otherPerson == null)
+        {
+            return;
+        }
         if(delayList.Contains(otherPerson))
         {
             //Debug.Log("이미 접촉된 사람");

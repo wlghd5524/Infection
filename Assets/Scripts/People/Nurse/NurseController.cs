@@ -45,11 +45,11 @@ public class NurseController : MonoBehaviour
         if (isWorking)
             return;
 
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance && (!agent.hasPath || agent.velocity.sqrMagnitude == 0f))
+        if (NPCMovementUtils.Instance.isArrived(agent))
         {
             if(!isWorking)
             {
-                StartCoroutine(WaitAndGo()); // 다음 작업을 위해 대기 후 이동
+                StartCoroutine(MoveToNextWaypointAfterWait()); // 다음 작업을 위해 대기 후 이동
             }
             
         }
@@ -73,7 +73,7 @@ public class NurseController : MonoBehaviour
         targetPatientController.StartCoroutine(targetPatientController.FollowNurse(gameObject));
         agent.speed -= 1;
         yield return StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatientController)); // 격리된 환자라면 음압실로 이동
-        yield return new WaitUntil(() => agent.remainingDistance <= agent.stoppingDistance);
+        yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
         agent.speed += 1;
         isWorking = false;
         targetPatientController.isFollowingNurse = false;
@@ -101,10 +101,10 @@ public class NurseController : MonoBehaviour
         for(int i = 0;i<4;i++)
         {
             NPRoom nPRoom = parentObject.transform.Find("N-PRoom (" + i + ")").GetComponent<NPRoom>(); // 음압실 웨이포인트 찾기
-            if (nPRoom.is_Empty)
+            if (nPRoom.is_empty)
             {
                 targetPatientController.nPRoom = nPRoom;
-                nPRoom.is_Empty = false;
+                nPRoom.is_empty = false;
                 agent.SetDestination(nPRoom.GetRandomPointInRange()); // 음압실로 이동
                 break;
             }
@@ -116,10 +116,10 @@ public class NurseController : MonoBehaviour
     }
 
     // 대기 후 랜덤 웨이포인트로 이동 코루틴
-    public IEnumerator WaitAndGo()
+    public IEnumerator MoveToNextWaypointAfterWait()
     {
         isWaiting = true; // 기다리는 중으로 설정
-        yield return new WaitForSeconds(1.0f); // 1초 대기
+        yield return new WaitForSeconds(1.5f); // 1초 대기
         isWaiting = false; // 기다리는 중 해제
         if(waypoints.Count > 0)
         {
@@ -136,6 +136,25 @@ public class NurseController : MonoBehaviour
                             agent.SetDestination(waypoints[i].GetRandomPointInRange());
                         }
                     }
+                }
+            }
+
+            else if(waypoints.Count == 7) //입원실 대기 간호사들
+            {
+                int random = Random.Range(1, waypoints.Count);
+                if (!waypoints[random].is_empty && waypoints[random] is BedWaypoint bed)
+                {
+                    InpatientController targetInpatientController = bed.inpatient.GetComponent<InpatientController>();
+                    targetInpatientController.StartCoroutine(targetInpatientController.WaitForNurse());
+                    agent.SetDestination(NPCMovementUtils.Instance.GetPositionInFront(transform,bed.inpatient.transform, 0.75f));
+                    yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
+                    NPCMovementUtils.Instance.FaceEachOther(bed.inpatient, gameObject);
+                    yield return new WaitForSeconds(1.5f);
+                    targetInpatientController.nurseSignal = true;
+                }
+                else
+                {
+                    agent.SetDestination(waypoints[0].GetRandomPointInRange());
                 }
             }
             else

@@ -53,7 +53,7 @@ public class DoctorController : MonoBehaviour
         {
             return;
         }
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
+        if (NPCMovementUtils.Instance.isArrived(agent)) 
         {
             StartCoroutine(MoveToNextWaypointAfterWait());
         }

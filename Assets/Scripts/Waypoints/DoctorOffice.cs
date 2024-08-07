@@ -5,7 +5,6 @@ using UnityEngine;
 public class DoctorOffice : Waypoint
 {
     public Queue<OutpatientController> waitingQueue = new Queue<OutpatientController>();
-    public bool is_empty = true;
     public GameObject doctor;
     // Start is called before the first frame update
     void Start()
@@ -25,7 +24,6 @@ public class DoctorOffice : Waypoint
                 {
                     return;
                 }
-                doctor.GetComponent<StressController>().stress += (++doctor.GetComponent<DoctorController>().patientCount / 10) + 1;
                 is_empty = false;
                 next.officeSignal = true;
             }

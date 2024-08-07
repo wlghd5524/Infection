@@ -7,10 +7,11 @@ public class ObjectPoolingManager : MonoBehaviour
     // 싱글톤 인스턴스
     public static ObjectPoolingManager Instance;
 
-    // 최대 외래 환자, 의사, 간호사 수
+    // 최대 외래 환자, 의사, 간호사, 입원 환자 수
     public int maxOfOutpatient;
     public int maxOfDoctor;
     public int maxOfNurse;
+    public int maxOfInpatient;
 
     // 비활성화된 외래 환자 오브젝트를 저장하는 큐
     public Queue<GameObject> outpatientQueue = new Queue<GameObject>();
@@ -23,6 +24,7 @@ public class ObjectPoolingManager : MonoBehaviour
         DoctorInitialize();
         OutpatientInitialize();
         NurseInitialize();
+        InpatientInitaialize();
     }
 
     // 외래 환자 초기화
@@ -57,7 +59,7 @@ public class ObjectPoolingManager : MonoBehaviour
             doctorController.waypoints.Add(spawnArea);
 
             // 외래 환자 대기 구역 할당
-            GameObject parentObject = GameObject.Find("OutPatientWaypoints").transform.Find("Ward (" + (i / 5) + ")").gameObject;
+            GameObject parentObject = GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + (i / 5) + ")").gameObject;
             DoctorOffice waypoint = parentObject.transform.Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
             doctorController.waypoints.Add(waypoint);
             newDoctor.transform.position = spawnArea.transform.position;
@@ -84,6 +86,25 @@ public class ObjectPoolingManager : MonoBehaviour
             newNurse.GetComponent<NurseController>().ward = ward;
             newNurse.GetComponent<NurseController>().isRest = true;
             newNurse.GetComponent<SkinnedMeshRenderer>().enabled = false;
+        }
+    }
+
+
+    private void InpatientInitaialize()
+    {
+        GameObject[] InpatientPrefabs = Resources.LoadAll<GameObject>("Prefabs/Inpatient");
+        for (int i = 0; i < maxOfInpatient; i++)
+        {
+            // 입원 환자 스폰 위치 설정
+            int ward = i / 6;
+            BedWaypoint spawnArea = GameObject.Find("InpatientWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("BedWaypoint (" + (i % 6) + ")").gameObject.GetComponent<BedWaypoint>();
+            GameObject newInpatient = Instantiate(InpatientPrefabs[Random.Range(0, InpatientPrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
+            newInpatient.name = "Inpatient " + i;
+            spawnArea.inpatient = newInpatient;
+            InpatientController newInpatientController = newInpatient.GetComponent<InpatientController>();
+            newInpatientController.bedWaypoint = spawnArea.gameObject;
+            newInpatientController.ward = ward;
+            newInpatient.GetComponent<Person>().role = Role.Inpatient;
         }
     }
 

@@ -42,6 +42,7 @@ public class NPCMovementUtils : MonoBehaviour
 
         if (animator.GetBool("Grounded") != (!agent.isOnOffMeshLink && agent.isOnNavMesh))
             animator.SetBool("Grounded", !agent.isOnOffMeshLink && agent.isOnNavMesh);
+
     }
 
     public Vector3 GetPositionInFront(Transform thisTransform, Transform targetTransform, float distance)
@@ -58,5 +59,12 @@ public class NPCMovementUtils : MonoBehaviour
 
         // 샘플링된 위치 반환
         return navHit.position;
+    }
+
+    public bool isArrived(NavMeshAgent agent)
+    {
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f)
+            return true;
+        return false;
     }
 }
