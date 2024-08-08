@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ÇÃ·¹ÀÌ¾îÀÇ »óÅÂ(°¨¿°º´)¸¦ ³ªÅ¸³»´Â enum
-//Stage1Àº Á¢ÃË¼º °¨¿°º´
-//Stage2Àº ºñÁ¢ÃË¼º(¹üÀ§Çü) °¨¿°º´
+//í”Œë ˆì´ì–´ì˜ ìƒíƒœ(ê°ì—¼ë³‘)ë¥¼ ë‚˜íƒ€ë‚´ëŠ” enum
+//Stage1ì€ ì ‘ì´‰ì„± ê°ì—¼ë³‘
+//Stage2ì€ ë¹„ì ‘ì´‰ì„±(ë²”ìœ„í˜•) ê°ì—¼ë³‘
 public enum InfectionState
 {
     Normal,
@@ -36,7 +36,7 @@ public class Person : MonoBehaviour
     void Update()
     {
 
-        //°¨¿°º´ Á¾·ù¿¡ µû¶ó °¨¿° ¹üÀ§ ¼³Á¤
+        //ê°ì—¼ë³‘ ì¢…ë¥˜ì— ë”°ë¼ ê°ì—¼ ë²”ìœ„ ì„¤ì •
         if (status == InfectionState.Stage1)
         {
             coll.radius = 0.3f;
@@ -62,7 +62,7 @@ public class Person : MonoBehaviour
             ballRenderer.enabled = false;
         }
 
-        //Âø¿ëÇÏ°í ÀÖ´Â º¸È£ Àåºñ¿¡ µû¶ó °¨¿° ÀúÇ×¼º ¼³Á¤
+        //ì°©ìš©í•˜ê³  ìˆëŠ” ë³´í˜¸ ì¥ë¹„ì— ë”°ë¼ ê°ì—¼ ì €í•­ì„± ì„¤ì •
         
     }
     public void ChangeStatus(InfectionState infection)

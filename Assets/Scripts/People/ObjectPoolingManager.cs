@@ -1,66 +1,63 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPoolingManager : MonoBehaviour
+public class ObjectPoolingManager
 {
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
-    public static ObjectPoolingManager Instance;
+    // ìµœëŒ€ ì™¸ë˜ í™˜ì, ì˜ì‚¬, ê°„í˜¸ì‚¬, ì…ì› í™˜ì ìˆ˜
+    public int maxOfOutpatient = 100;
+    public int maxOfDoctor = 30;
+    public int maxOfNurse = 120;
+    public int maxOfInpatient = 36;
 
-    // ÃÖ´ë ¿Ü·¡ È¯ÀÚ, ÀÇ»ç, °£È£»ç, ÀÔ¿ø È¯ÀÚ ¼ö
-    public int maxOfOutpatient;
-    public int maxOfDoctor;
-    public int maxOfNurse;
-    public int maxOfInpatient;
-
-    // ºñÈ°¼ºÈ­µÈ ¿Ü·¡ È¯ÀÚ ¿ÀºêÁ§Æ®¸¦ ÀúÀåÇÏ´Â Å¥
+    // ë¹„í™œì„±í™”ëœ ì™¸ë˜ í™˜ì ì˜¤ë¸Œì íŠ¸ë¥¼ ì €ì¥í•˜ëŠ” í
     public Queue<GameObject> outpatientQueue = new Queue<GameObject>();
 
-    void Awake()
+
+    public void Init()
     {
-        // ½Ì±ÛÅæ ÆĞÅÏ ±¸Çö
-        Instance = this;
-        // ÀÇ»ç, ¿Ü·¡ È¯ÀÚ, °£È£»ç ÃÊ±âÈ­
+        // ì˜ì‚¬, ì™¸ë˜ í™˜ì, ê°„í˜¸ì‚¬ ì´ˆê¸°í™”
         DoctorInitialize();
         OutpatientInitialize();
         NurseInitialize();
         InpatientInitaialize();
     }
 
-    // ¿Ü·¡ È¯ÀÚ ÃÊ±âÈ­
+    // ì™¸ë˜ í™˜ì ì´ˆê¸°í™”
     private void OutpatientInitialize()
     {
-        // ¿Ü·¡ È¯ÀÚ ÇÁ¸®ÆÕ ·Îµå
+        // ì™¸ë˜ í™˜ì í”„ë¦¬íŒ¹ ë¡œë“œ
         GameObject[] OutpatientPrefabs = Resources.LoadAll<GameObject>("Prefabs/Outpatient");
         for (int i = 0; i < maxOfOutpatient; i++)
         {
-            // ÇÁ¸®ÆÕ ¸®½ºÆ®¿¡¼­ ·£´ıÀ¸·Î ÇÏ³ª ¼±ÅÃÇÏ¿© »ı¼º
-            GameObject newOutPatient = Instantiate(OutpatientPrefabs[Random.Range(0, OutpatientPrefabs.Length)]);
-            outpatientQueue.Enqueue(newOutPatient); // Å¥¿¡ Ãß°¡
-            newOutPatient.SetActive(false); // ºñÈ°¼ºÈ­
+            // í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ì„ íƒí•˜ì—¬ ìƒì„±
+            GameObject newOutPatient = Object.Instantiate(OutpatientPrefabs[Random.Range(0, OutpatientPrefabs.Length)]);
+            outpatientQueue.Enqueue(newOutPatient); // íì— ì¶”ê°€
+            newOutPatient.SetActive(false); // ë¹„í™œì„±í™”
         }
     }
 
-    // ÀÇ»ç ÃÊ±âÈ­
+    // ì˜ì‚¬ ì´ˆê¸°í™”
     private void DoctorInitialize()
     {
-        // ÀÇ»ç ÇÁ¸®ÆÕ ·Îµå
+        // ì˜ì‚¬ í”„ë¦¬íŒ¹ ë¡œë“œ
         GameObject[] DoctorPrefabs = Resources.LoadAll<GameObject>("Prefabs/Doctor");
         for (int i = 0; i < maxOfDoctor; i++)
         {
-            // ÀÇ»ç ½ºÆù À§Ä¡ ¼³Á¤
-            DoctorOffice spawnArea = GameObject.Find("DoctorWaypoints").transform.Find("Ward (" + (i / 5) + ")").transform.Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
-            // ÇÁ¸®ÆÕ ¸®½ºÆ®¿¡¼­ ·£´ıÀ¸·Î ÇÏ³ª ¼±ÅÃÇÏ¿© »ı¼º
-            GameObject newDoctor = Instantiate(DoctorPrefabs[Random.Range(0, DoctorPrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
+            int ward = i / 5;
+            // ì˜ì‚¬ ìŠ¤í° ìœ„ì¹˜ ì„¤ì •
+            DoctorOffice spawnArea = Managers.NPCManager.waypointDictionary[(ward, "DoctorWaypoints")].Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
+            //DoctorOffice spawnArea = GameObject.Find("DoctorWaypoints").transform.Find("Ward (" + (i / 5) + ")").transform.Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
+            // í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ì„ íƒí•˜ì—¬ ìƒì„±
+            GameObject newDoctor = Object.Instantiate(DoctorPrefabs[Random.Range(0, DoctorPrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
             newDoctor.name = "Doctor " + i;
             DoctorController doctorController = newDoctor.GetComponent<DoctorController>();
 
-            // ÀÇ»ç »ç¹«½Ç ÇÒ´ç
+            // ì˜ì‚¬ ì‚¬ë¬´ì‹¤ í• ë‹¹
             doctorController.waypoints.Add(spawnArea);
 
-            // ¿Ü·¡ È¯ÀÚ ´ë±â ±¸¿ª ÇÒ´ç
-            GameObject parentObject = GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + (i / 5) + ")").gameObject;
-            DoctorOffice waypoint = parentObject.transform.Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
+            // ì™¸ë˜ í™˜ì ëŒ€ê¸° êµ¬ì—­ í• ë‹¹
+            DoctorOffice waypoint = Managers.NPCManager.waypointDictionary[(ward, "OutpatientWaypoints")].Find("Doctor'sOffice (" + (i % 5) + ")").GetComponent<DoctorOffice>();
             doctorController.waypoints.Add(waypoint);
             newDoctor.transform.position = spawnArea.transform.position;
             newDoctor.GetComponent<SkinnedMeshRenderer>().enabled = false;
@@ -71,17 +68,17 @@ public class ObjectPoolingManager : MonoBehaviour
         }
     }
 
-    // °£È£»ç ÃÊ±âÈ­
+    // ê°„í˜¸ì‚¬ ì´ˆê¸°í™”
     private void NurseInitialize()
     {
-        // °£È£»ç ÇÁ¸®ÆÕ ·Îµå
+        // ê°„í˜¸ì‚¬ í”„ë¦¬íŒ¹ ë¡œë“œ
         GameObject[] NursePrefabs = Resources.LoadAll<GameObject>("Prefabs/Nurse");
         for (int i = 0; i < maxOfNurse; i++)
         {
-            // °£È£»ç ½ºÆù À§Ä¡ ¼³Á¤
+            // ê°„í˜¸ì‚¬ ìŠ¤í° ìœ„ì¹˜ ì„¤ì •
             int ward = i / 20;
-            Waypoint spawnArea = GameObject.Find("NurseWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
-            GameObject newNurse = Instantiate(NursePrefabs[Random.Range(0, NursePrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
+            Waypoint spawnArea = Managers.NPCManager.waypointDictionary[(ward, "NurseWaypoints")].Find("NurseSpawnArea").gameObject.GetComponent<Waypoint>();
+            GameObject newNurse = Object.Instantiate(NursePrefabs[Random.Range(0, NursePrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
             newNurse.name = "Nurse " + i;
             newNurse.GetComponent<NurseController>().ward = ward;
             newNurse.GetComponent<NurseController>().isRest = true;
@@ -95,10 +92,10 @@ public class ObjectPoolingManager : MonoBehaviour
         GameObject[] InpatientPrefabs = Resources.LoadAll<GameObject>("Prefabs/Inpatient");
         for (int i = 0; i < maxOfInpatient; i++)
         {
-            // ÀÔ¿ø È¯ÀÚ ½ºÆù À§Ä¡ ¼³Á¤
+            // ì…ì› í™˜ì ìŠ¤í° ìœ„ì¹˜ ì„¤ì •
             int ward = i / 6;
-            BedWaypoint spawnArea = GameObject.Find("InpatientWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("BedWaypoint (" + (i % 6) + ")").gameObject.GetComponent<BedWaypoint>();
-            GameObject newInpatient = Instantiate(InpatientPrefabs[Random.Range(0, InpatientPrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
+            BedWaypoint spawnArea = Managers.NPCManager.waypointDictionary[(ward, "InpatientWaypoints")].Find("BedWaypoint (" + (i % 6) + ")").gameObject.GetComponent<BedWaypoint>();
+            GameObject newInpatient = Object.Instantiate(InpatientPrefabs[Random.Range(0, InpatientPrefabs.Length)], spawnArea.GetRandomPointInRange(), Quaternion.identity);
             newInpatient.name = "Inpatient " + i;
             spawnArea.inpatient = newInpatient;
             InpatientController newInpatientController = newInpatient.GetComponent<InpatientController>();
@@ -108,63 +105,63 @@ public class ObjectPoolingManager : MonoBehaviour
         }
     }
 
-    // ¿Ü·¡ È¯ÀÚ ºñÈ°¼ºÈ­ ¹× ÃÊ±âÈ­
+    // ì™¸ë˜ í™˜ì ë¹„í™œì„±í™” ë° ì´ˆê¸°í™”
     public void DeactivateOutpatient(GameObject outpatient)
     {
-        outpatient.GetComponent<Person>().status = InfectionState.Normal; // °¨¿° »óÅÂ ÃÊ±âÈ­
+        outpatient.GetComponent<Person>().status = InfectionState.Normal; // ê°ì—¼ ìƒíƒœ ì´ˆê¸°í™”
         OutpatientController outpatientController = outpatient.GetComponent<OutpatientController>();
-        outpatientController.waypoints.Clear(); // ¿şÀÌÆ÷ÀÎÆ® ÃÊ±âÈ­
-        outpatientController.isWaiting = false; // ´ë±â »óÅÂ ÃÊ±âÈ­
-        outpatientController.waypointIndex = 0; // ¿şÀÌÆ÷ÀÎÆ® ÀÎµ¦½º ÃÊ±âÈ­
-        outpatientController.doctorSignal = false; // ÀÇ»ç ½ÅÈ£ ÃÊ±âÈ­
-        outpatientController.nurseSignal = false; // °£È£»ç ½ÅÈ£ ÃÊ±âÈ­
-        outpatientController.officeSignal = false; // Áø·á½Ç ½ÅÈ£ ÃÊ±âÈ­
-        outpatientQueue.Enqueue(outpatient); // Å¥¿¡ Ãß°¡
-        outpatient.SetActive(false); // ºñÈ°¼ºÈ­
+        outpatientController.waypoints.Clear(); // ì›¨ì´í¬ì¸íŠ¸ ì´ˆê¸°í™”
+        outpatientController.isWaiting = false; // ëŒ€ê¸° ìƒíƒœ ì´ˆê¸°í™”
+        outpatientController.waypointIndex = 0; // ì›¨ì´í¬ì¸íŠ¸ ì¸ë±ìŠ¤ ì´ˆê¸°í™”
+        outpatientController.doctorSignal = false; // ì˜ì‚¬ ì‹ í˜¸ ì´ˆê¸°í™”
+        outpatientController.nurseSignal = false; // ê°„í˜¸ì‚¬ ì‹ í˜¸ ì´ˆê¸°í™”
+        outpatientController.officeSignal = false; // ì§„ë£Œì‹¤ ì‹ í˜¸ ì´ˆê¸°í™”
+        outpatientQueue.Enqueue(outpatient); // íì— ì¶”ê°€
+        outpatient.SetActive(false); // ë¹„í™œì„±í™”
     }
 
-    // ¿Ü·¡ È¯ÀÚ È°¼ºÈ­ ¹× À§Ä¡ ¼³Á¤
+    // ì™¸ë˜ í™˜ì í™œì„±í™” ë° ìœ„ì¹˜ ì„¤ì •
     public GameObject ActivateOutpatient(Vector3 position)
     {
-        GameObject newOutpatient = outpatientQueue.Dequeue(); // Å¥¿¡¼­ ¿Ü·¡ È¯ÀÚ °¡Á®¿À±â
-        newOutpatient.transform.position = position; // À§Ä¡ ¼³Á¤
-        newOutpatient.SetActive(true); // È°¼ºÈ­
+        GameObject newOutpatient = outpatientQueue.Dequeue(); // íì—ì„œ ì™¸ë˜ í™˜ì ê°€ì ¸ì˜¤ê¸°
+        newOutpatient.transform.position = position; // ìœ„ì¹˜ ì„¤ì •
+        newOutpatient.SetActive(true); // í™œì„±í™”
         return newOutpatient;
     }
 
-    // ÀÇ»ç ºñÈ°¼ºÈ­ ¹× ÃÊ±âÈ­
+    // ì˜ì‚¬ ë¹„í™œì„±í™” ë° ì´ˆê¸°í™”
     public void DeactivateDoctor(GameObject doctor)
     {
         DoctorController doctorController = doctor.GetComponent<DoctorController>();
-        doctorController.patientCount = 0; // È¯ÀÚ ¼ö ÃÊ±âÈ­
-        doctorController.isWaiting = false; // ´ë±â »óÅÂ ÃÊ±âÈ­
-        doctorController.isResting = true; // ÈŞ½Ä »óÅÂ ¼³Á¤
-        doctorController.changeSignal = false; // ½ÅÈ£ ÃÊ±âÈ­
-        doctor.GetComponent<SkinnedMeshRenderer>().enabled = false; // ·»´õ·¯ ºñÈ°¼ºÈ­
+        doctorController.patientCount = 0; // í™˜ì ìˆ˜ ì´ˆê¸°í™”
+        doctorController.isWaiting = false; // ëŒ€ê¸° ìƒíƒœ ì´ˆê¸°í™”
+        doctorController.isResting = true; // íœ´ì‹ ìƒíƒœ ì„¤ì •
+        doctorController.changeSignal = false; // ì‹ í˜¸ ì´ˆê¸°í™”
+        doctor.GetComponent<SkinnedMeshRenderer>().enabled = false; // ë Œë”ëŸ¬ ë¹„í™œì„±í™”
     }
 
-    // ÀÇ»ç È°¼ºÈ­ ¹× À§Ä¡ ¼³Á¤
+    // ì˜ì‚¬ í™œì„±í™” ë° ìœ„ì¹˜ ì„¤ì •
     public GameObject ActivateDoctor(GameObject newDoctor)
     {
         DoctorController doctorController = newDoctor.GetComponent<DoctorController>();
-        doctorController.changeSignal = true; // ½ÅÈ£ ¼³Á¤
-        newDoctor.transform.position = doctorController.waypoints[0].GetRandomPointInRange(); // À§Ä¡ ¼³Á¤
-        newDoctor.GetComponent<SkinnedMeshRenderer>().enabled = true; // ·»´õ·¯ È°¼ºÈ­
-        doctorController.isResting = false; // ÈŞ½Ä »óÅÂ ÇØÁ¦
+        doctorController.changeSignal = true; // ì‹ í˜¸ ì„¤ì •
+        newDoctor.transform.position = doctorController.waypoints[0].GetRandomPointInRange(); // ìœ„ì¹˜ ì„¤ì •
+        newDoctor.GetComponent<SkinnedMeshRenderer>().enabled = true; // ë Œë”ëŸ¬ í™œì„±í™”
+        doctorController.isResting = false; // íœ´ì‹ ìƒíƒœ í•´ì œ
         return newDoctor;
     }
 
-    // °£È£»ç È°¼ºÈ­
+    // ê°„í˜¸ì‚¬ í™œì„±í™”
     public GameObject ActivateNurse(GameObject newNurse)
     {
-        newNurse.GetComponent<SkinnedMeshRenderer>().enabled = true; // ·»´õ·¯ È°¼ºÈ­
+        newNurse.GetComponent<SkinnedMeshRenderer>().enabled = true; // ë Œë”ëŸ¬ í™œì„±í™”
         newNurse.GetComponent<NurseController>().isRest = false;
         return newNurse;
     }
 
     public void DeactivateNurse(GameObject nurse)
     {
-        nurse.GetComponent<SkinnedMeshRenderer>().enabled = false; // ·»´õ·¯ È°¼ºÈ­
+        nurse.GetComponent<SkinnedMeshRenderer>().enabled = false; // ë Œë”ëŸ¬ í™œì„±í™”
         NurseController nurseController = nurse.GetComponent<NurseController>();
         nurseController.isRest = true;
         nurseController.isWaiting = false;

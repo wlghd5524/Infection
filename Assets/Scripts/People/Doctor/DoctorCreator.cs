@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
 using UnityEngine;
@@ -18,9 +18,8 @@ public class DoctorCreator : MonoBehaviour
         {
             for (int j = 0; j < 3; j++)
             {
-                ObjectPoolingManager.Instance.ActivateDoctor(GameObject.Find("Doctor " + ((i * 5) + j)));
+                Managers.ObjectPooling.ActivateDoctor(GameObject.Find("Doctor " + ((i * 5) + j)));
             }
-
         }
     }
 
@@ -34,14 +33,14 @@ public class DoctorCreator : MonoBehaviour
             GameObject newDoctor = GameObject.Find("Doctor " + doctorCount[num / 5]++ % 5);
             if (newDoctor == null)
             {
-                Debug.LogError("»õ·Î¿î ´ÚÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.LogError("ìƒˆë¡œìš´ ë‹¥í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             }
             if (!newDoctor.GetComponent<DoctorController>().isResting)
             {
                 continue;
             }
-            ObjectPoolingManager.Instance.DeactivateDoctor(endDoctor);
-            ObjectPoolingManager.Instance.ActivateDoctor(newDoctor);
+            Managers.ObjectPooling.DeactivateDoctor(endDoctor);
+            Managers.ObjectPooling.ActivateDoctor(newDoctor);
             break;
         }
     }

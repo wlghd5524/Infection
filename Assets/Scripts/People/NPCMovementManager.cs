@@ -1,22 +1,41 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using UnityEngine;
 
-public class NPCMovementUtils : MonoBehaviour
+public class NPCMovementManager
 {
-    private static NPCMovementUtils _instance = new NPCMovementUtils();
-    public static NPCMovementUtils Instance { get { return _instance; } }
+    public Dictionary<(int, string), Transform> waypointDictionary = new Dictionary<(int, string), Transform>();
+    public Transform gatewayTransform;
 
+    public void Init()
+    {
+        gatewayTransform = GameObject.Find("Waypoints").transform.Find("Gateways");
+        for (int i = 0;i<6;i++)
+        {
+            Transform wardTransform = GameObject.Find("Waypoints").transform.Find("Ward (" + i + ")");
+            Transform waypointsGameObject = wardTransform.Find("OutpatientWaypoints");
+            waypointDictionary.Add((i, "OutpatientWaypoints"), waypointsGameObject);
+
+            waypointsGameObject = wardTransform.Find("DoctorWaypoints");
+            waypointDictionary.Add((i, "DoctorWaypoints"),waypointsGameObject);
+
+            waypointsGameObject = wardTransform.Find("InpatientWaypoints");
+            waypointDictionary.Add((i, "InpatientWaypoints"), waypointsGameObject);
+
+            waypointsGameObject = wardTransform.Find("NurseWaypoints");
+            waypointDictionary.Add((i, "NurseWaypoints"), waypointsGameObject);
+        }
+    }
     public void FaceEachOther(GameObject obj1, GameObject obj2)
     {
-        obj1.transform.LookAt(obj2.transform.position); // obj1ÀÌ obj2¸¦ ¹Ù¶óº¸°Ô ¼³Á¤
-        obj2.transform.LookAt(obj1.transform.position); // obj2°¡ obj1À» ¹Ù¶óº¸°Ô ¼³Á¤
+        obj1.transform.LookAt(obj2.transform.position); // obj1ì´ obj2ë¥¼ ë°”ë¼ë³´ê²Œ ì„¤ì •
+        obj2.transform.LookAt(obj1.transform.position); // obj2ê°€ obj1ì„ ë°”ë¼ë³´ê²Œ ì„¤ì •
     }
 
     public void UpdateAnimation(NavMeshAgent agent, Animator animator)
     {
-        // ¾Ö´Ï¸ÞÀÌ¼Ç
+        // ì• ë‹ˆë©”ì´ì…˜
         if (!agent.isOnNavMesh)
         {
             if (animator.GetFloat("MoveSpeed") != 0)
@@ -47,17 +66,17 @@ public class NPCMovementUtils : MonoBehaviour
 
     public Vector3 GetPositionInFront(Transform thisTransform, Transform targetTransform, float distance)
     {
-        // ´ë»ó ¿ÀºêÁ§Æ®¿Í ÇöÀç ¿ÀºêÁ§Æ® »çÀÌÀÇ ¹æÇâ º¤ÅÍ¸¦ ±¸ÇÔ
+        // ëŒ€ìƒ ì˜¤ë¸Œì íŠ¸ì™€ í˜„ìž¬ ì˜¤ë¸Œì íŠ¸ ì‚¬ì´ì˜ ë°©í–¥ ë²¡í„°ë¥¼ êµ¬í•¨
         Vector3 direction = -(targetTransform.position - thisTransform.position).normalized;
 
-        // ´ë»ó ¿ÀºêÁ§Æ®ÀÇ À§Ä¡·ÎºÎÅÍ ±× ¹æÇâÀ¸·Î ÀÏÁ¤ °Å¸®¸¸Å­ ¶³¾îÁø À§Ä¡ °è»ê
+        // ëŒ€ìƒ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ë¡œë¶€í„° ê·¸ ë°©í–¥ìœ¼ë¡œ ì¼ì • ê±°ë¦¬ë§Œí¼ ë–¨ì–´ì§„ ìœ„ì¹˜ ê³„ì‚°
         Vector3 destination = targetTransform.position + (direction * distance);
 
-        // ³×ºñ°ÔÀÌ¼Ç ¸Þ½Ã »óÀÇ À§Ä¡ »ùÇÃ¸µ
+        // ë„¤ë¹„ê²Œì´ì…˜ ë©”ì‹œ ìƒì˜ ìœ„ì¹˜ ìƒ˜í”Œë§
         NavMeshHit navHit;
         NavMesh.SamplePosition(destination, out navHit, distance, NavMesh.AllAreas);
 
-        // »ùÇÃ¸µµÈ À§Ä¡ ¹ÝÈ¯
+        // ìƒ˜í”Œë§ëœ ìœ„ì¹˜ ë°˜í™˜
         return navHit.position;
     }
 

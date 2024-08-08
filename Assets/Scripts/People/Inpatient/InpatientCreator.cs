@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,6 @@ public class InpatientCreator : MonoBehaviour
     void Start()
     {
         //prefabs = Resources.LoadAll<GameObject>("Prefabs/Test");
-        
     }
 
     // Update is called once per frame
@@ -21,12 +20,12 @@ public class InpatientCreator : MonoBehaviour
     {
         //if(numberOfInpatient < maxOfInpatient)
         //{
-        //    // ÇÁ¸®ÆÕ ¸®½ºÆ®¿¡¼­ ·£´ıÀ¸·Î ÇÏ³ª ¼±ÅÃ
+        //    // í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸ì—ì„œ ëœë¤ìœ¼ë¡œ í•˜ë‚˜ ì„ íƒ
         //    GameObject prefabToSpawn = prefabs[Random.Range(0, prefabs.Length)];
         //    spawnArea = (GameObject.Find("InpatientWaypoints")).transform.GetChild(numberOfInpatient).gameObject;
-        //    // ·£´ı À§Ä¡ ¼³Á¤
+        //    // ëœë¤ ìœ„ì¹˜ ì„¤ì •
         //    Vector3 randomPosition = spawnArea.GetComponent<Waypoint>().GetRandomPointInRange();
-        //    // ÇÁ¸®ÆÕ »ı¼º
+        //    // í”„ë¦¬íŒ¹ ìƒì„±
         //    newInpatient = Instantiate(prefabToSpawn, randomPosition, Quaternion.identity);
         //    Person newInpatientPerson = newInpatient.GetComponent<Person>();
         //    newInpatientPerson.role = Role.Inpatient;

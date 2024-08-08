@@ -1,11 +1,12 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
     public bool is_empty = true;
-    public Vector3 rangeSize; // ¿şÀÌÆ÷ÀÎÆ® ¹üÀ§ÀÇ Å©±â
+    public int ward;
+    public Vector3 rangeSize; // ì›¨ì´í¬ì¸íŠ¸ ë²”ìœ„ì˜ í¬ê¸°
 
-    // ¹üÀ§ ³»¿¡¼­ ·£´ı À§Ä¡¸¦ ¹İÈ¯
+    // ë²”ìœ„ ë‚´ì—ì„œ ëœë¤ ìœ„ì¹˜ë¥¼ ë°˜í™˜
     public Vector3 GetRandomPointInRange()
     {
         Vector3 randomPoint = new Vector3(
@@ -17,7 +18,7 @@ public class Waypoint : MonoBehaviour
     }
 
 
-    // Gizmos¸¦ »ç¿ëÇÏ¿© ¹üÀ§¸¦ ½Ã°¢ÀûÀ¸·Î Ç¥½Ã
+    // Gizmosë¥¼ ì‚¬ìš©í•˜ì—¬ ë²”ìœ„ë¥¼ ì‹œê°ì ìœ¼ë¡œ í‘œì‹œ
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

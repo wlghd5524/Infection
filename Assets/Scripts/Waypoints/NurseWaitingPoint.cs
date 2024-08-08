@@ -8,7 +8,7 @@ public class NurseWaitingPoint : Waypoint
     // Start is called before the first frame update
     void Start()
     {
-        doctorOffice = GameObject.Find("OutpatientWaypoints").transform.Find(gameObject.transform.parent.name).transform.Find(gameObject.name).GetComponent<DoctorOffice>();
+        doctorOffice = Managers.NPCManager.waypointDictionary[(ward, "OutpatientWaypoints")].Find(gameObject.name).GetComponent<DoctorOffice>();
     }
 
     // Update is called once per frame

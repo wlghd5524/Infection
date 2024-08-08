@@ -1,33 +1,31 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InfectionManager : MonoBehaviour
+public class InfectionManager
 {
-    private static InfectionManager _instance = new InfectionManager();
-    public static InfectionManager Instance { get { return _instance; } }
     public int infectionProbability = 30;
 
-    //½ºÅ×ÀÌÁö °¨¿°º´ Á¾·ù¿¡ µû¸¥ °¨¿° È®·ü ¸ÅÇÎ
+    //ìŠ¤í…Œì´ì§€ ê°ì—¼ë³‘ ì¢…ë¥˜ì— ë”°ë¥¸ ê°ì—¼ í™•ë¥  ë§¤í•‘
     private Dictionary<int, float> probabilityMapping = new Dictionary<int, float>();
 
-    //À¯´ÏÆ¼¿¡¼­ Å×½ºÆ®¸¦ À§ÇÑ °¨¿° È®·ü º¯¼ö (Å×½ºÆ® ´Ü°è¿¡¼­¸¸ »ç¿ë, ¹èÆ÷ ´Ü°è¿¡¼± Á¦¿Ü)
+    //ìœ ë‹ˆí‹°ì—ì„œ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•œ ê°ì—¼ í™•ë¥  ë³€ìˆ˜ (í…ŒìŠ¤íŠ¸ ë‹¨ê³„ì—ì„œë§Œ ì‚¬ìš©, ë°°í¬ ë‹¨ê³„ì—ì„  ì œì™¸)
     public int stage1InfectionProbability = 30;
     public int stage2InfectionProbability = 20;
 
-    private void Start()
+    public void Init()
     {
         infectionProbability = stage1InfectionProbability;
         probabilityMapping.Add(1, stage1InfectionProbability);
         probabilityMapping.Add(2, stage2InfectionProbability);
     }
-    void Update()
+    public void UpdateInfectionProbability()
     {
-        if (StageManager.Instance.stage == 1)
+        if (Managers.Stage.stage == 1)
         {
             infectionProbability = stage1InfectionProbability;
         }
-        else if (StageManager.Instance.stage == 2)
+        else if (Managers.Stage.stage == 2)
         {
             infectionProbability = stage2InfectionProbability;
         }

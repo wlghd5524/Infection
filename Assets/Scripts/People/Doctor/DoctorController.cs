@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,8 +34,8 @@ public class DoctorController : MonoBehaviour
         {
             return;
         }
-        // ¾Ö´Ï¸ÞÀÌ¼Ç
-        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
+        // ì• ë‹ˆë©”ì´ì…˜
+        Managers.NPCManager.UpdateAnimation(agent, animator);
 
         
 
@@ -53,7 +53,7 @@ public class DoctorController : MonoBehaviour
         {
             return;
         }
-        if (NPCMovementUtils.Instance.isArrived(agent)) 
+        if (Managers.NPCManager.isArrived(agent)) 
         {
             StartCoroutine(MoveToNextWaypointAfterWait());
         }
@@ -66,11 +66,9 @@ public class DoctorController : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(1.0f, 2.0f));
         isWaiting = false;
 
-
-
         if (!agent.isOnNavMesh)
         {
-            Debug.LogError("NavMeshAgent°¡ ³»ºñ°ÔÀÌ¼Ç ÁØºñ°¡ µÇÁö ¾Ê¾Ò½À´Ï´Ù. È°¼ºÈ­ »óÅÂ, È°¼ºÈ­ ¿©ºÎ, NavMesh À§Ä¡ ¿©ºÎ¸¦ È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("NavMeshAgentê°€ ë‚´ë¹„ê²Œì´ì…˜ ì¤€ë¹„ê°€ ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤. í™œì„±í™” ìƒíƒœ, í™œì„±í™” ì—¬ë¶€, NavMesh ìœ„ì¹˜ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ì„¸ìš”.");
         }
 
         if (waypoints[1] is DoctorOffice doctorOffice)
@@ -81,7 +79,7 @@ public class DoctorController : MonoBehaviour
             }
             else
             {
-                Vector3 outpatientLocation = NPCMovementUtils.Instance.GetPositionInFront(transform, outpatient.transform, 0.75f);
+                Vector3 outpatientLocation = Managers.NPCManager.GetPositionInFront(transform, outpatient.transform, 0.75f);
                 agent.SetDestination(outpatientLocation);
                 yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance < 0.5f && agent.velocity.sqrMagnitude == 0f);
                 outpatient.GetComponent<OutpatientController>().doctorSignal = true;

@@ -1,32 +1,31 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NurseCreator : MonoBehaviour
 {
-    public static NurseCreator Instance; // NurseCreatorÀÇ ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
-    public int numberOfNurse = 0; // ÇöÀç °£È£»ç ¼ö
+    public static NurseCreator Instance; // NurseCreatorì˜ ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤
+    public int numberOfNurse = 0; // í˜„ì¬ ê°„í˜¸ì‚¬ ìˆ˜
 
-    // Start´Â Ã¹ ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ® Àü¿¡ È£ÃâµË´Ï´Ù.
+    // StartëŠ” ì²« í”„ë ˆì„ ì—…ë°ì´íŠ¸ ì „ì— í˜¸ì¶œë©ë‹ˆë‹¤.
     void Start()
     {
-        Instance = this; // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤
-        for (int i = 0; i < ObjectPoolingManager.Instance.maxOfNurse; i++) // ÃÖ´ë °£È£»ç ¼ö¸¸Å­ ·çÇÁ ½ÇÇà
+        Instance = this; // ì‹±ê¸€í†¤ ì¸ìŠ¤í„´ìŠ¤ ì„¤ì •
+        for (int i = 0; i < Managers.ObjectPooling.maxOfNurse; i++) // ìµœëŒ€ ê°„í˜¸ì‚¬ ìˆ˜ë§Œí¼ ë£¨í”„ ì‹¤í–‰
         {
-            if (i % 20 < 10) // Á¶°Ç¿¡ µû¶ó Æ¯Á¤ °£È£»ç¸¸ È°¼ºÈ­
+            if (i % 20 < 10) // ì¡°ê±´ì— ë”°ë¼ íŠ¹ì • ê°„í˜¸ì‚¬ë§Œ í™œì„±í™”
             {
-                GameObject newNurse = GameObject.Find("Nurse " + i); // °£È£»ç °´Ã¼ Ã£±â
-                ObjectPoolingManager.Instance.ActivateNurse(newNurse); // °£È£»ç È°¼ºÈ­
-                Transform ward = GameObject.Find("NurseWaypoints").transform.Find("Ward (" + i / 20 + ")"); // º´µ¿ Ã£±â
+                GameObject newNurse = GameObject.Find("Nurse " + i); // ê°„í˜¸ì‚¬ ê°ì²´ ì°¾ê¸°
+                Managers.ObjectPooling.ActivateNurse(newNurse); // ê°„í˜¸ì‚¬ í™œì„±í™”
+                Transform wardTransform = Managers.NPCManager.waypointDictionary[(i / 20, "NurseWaypoints")]; // ë³‘ë™ ì°¾ê¸°
                 NurseController newNurseController = newNurse.GetComponent<NurseController>();
-                switch (i % 10) // °£È£»çÀÇ Á¾·ù¿¡ µû¶ó ¿şÀÌÆ÷ÀÎÆ® ¼³Á¤
+                switch (i % 10) // ê°„í˜¸ì‚¬ì˜ ì¢…ë¥˜ì— ë”°ë¼ ì›¨ì´í¬ì¸íŠ¸ ì„¤ì •
                 {
                     case 0:
-                        newNurseController.waypoints.Add(ward.transform.Find("PatientRoom").GetComponent<Waypoint>()); // È¯ÀÚ½Ç ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
-                        Transform bedTransform = GameObject.Find("InpatientWaypoints").transform.Find("Ward (" + newNurseController.ward + ")").transform;
+                        newNurseController.waypoints.Add(wardTransform.Find("PatientRoom").GetComponent<Waypoint>()); // í™˜ìì‹¤ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
                         for (int j = 0;j<6;j++)
                         {
-                            newNurseController.waypoints.Add(bedTransform.Find("BedWaypoint (" + j + ")").gameObject.GetComponent<Waypoint>());
+                            newNurseController.waypoints.Add(Managers.NPCManager.waypointDictionary[(i / 20, "InpatientWaypoints")].Find("BedWaypoint (" + j + ")").gameObject.GetComponent<Waypoint>());
                         }
                         break;
                     case 1:
@@ -34,26 +33,27 @@ public class NurseCreator : MonoBehaviour
                     case 3:
                         for (int j = 0; j < 5; j++)
                         {
-                            newNurseController.waypoints.Add(ward.transform.Find("Doctor'sOffice (" + j + ")").GetComponent<Waypoint>()); // ÀÇ»ç½Ç ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
+                            newNurseController.waypoints.Add(wardTransform.Find("Doctor'sOffice (" + j + ")").GetComponent<Waypoint>()); // ì˜ì‚¬ì‹¤ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
                         }
                         break;
                     case 4:
                     case 5:
                     case 6:
                     case 7:
-                        newNurseController.waypoints.Add(ward.transform.Find("Counter").GetComponent<Waypoint>()); // Ä«¿îÅÍ ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
+                        newNurseController.waypoints.Add(wardTransform.Find("Counter").GetComponent<Waypoint>()); // ì¹´ìš´í„° ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
                         break;
                     case 8:
                     case 9:
-                        newNurseController.waypoints.Add(GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + i / 20 + ")").transform.Find("CounterWaypoint (0)").GetComponent<Waypoint>()); // ¿Ü·¡È¯ÀÚ Ä«¿îÅÍ ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
-                        newNurseController.waypoints.Add(GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + i / 20 + ")").transform.Find("SofaWaypoint (0)").GetComponent<Waypoint>()); // ¿Ü·¡È¯ÀÚ ¼ÒÆÄ ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
+                        newNurseController.waypoints.Add(Managers.NPCManager.waypointDictionary[(i / 20, "OutpatientWaypoints")].Find("CounterWaypoint (0)").GetComponent<Waypoint>()); // ì™¸ë˜í™˜ì ì¹´ìš´í„° ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
+                        newNurseController.waypoints.Add(Managers.NPCManager.waypointDictionary[(i / 20, "OutpatientWaypoints")].Find("SofaWaypoint (0)").GetComponent<Waypoint>()); // ì™¸ë˜í™˜ì ì†ŒíŒŒ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
                         break;
                 }
             }
         }
     }
 
-    // Update´Â ¸Å ÇÁ·¹ÀÓ È£ÃâµË´Ï´Ù.
+
+    // UpdateëŠ” ë§¤ í”„ë ˆì„ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Update()
     {
 

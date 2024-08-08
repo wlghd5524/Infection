@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,20 +27,20 @@ public class InpatientController : MonoBehaviour
         {
             waypoints.Add(waypointTransform.Find("VendingMachineWaypoint (" + i + ")").gameObject.GetComponent<Waypoint>());
         }
-        waypoints.Add(GameObject.Find("OutpatientWaypoints").transform.Find("Ward (" + ward + ")").transform.Find("CounterWaypoint (0)").gameObject.GetComponent<Waypoint>());
+        waypoints.Add(Managers.NPCManager.waypointDictionary[(ward, "OutpatientWaypoints")].Find("CounterWaypoint (0)").gameObject.GetComponent<Waypoint>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç
-        NPCMovementUtils.Instance.UpdateAnimation(agent, animator);
+        // ì• ë‹ˆë©”ì´ì…˜
+        Managers.NPCManager.UpdateAnimation(agent, animator);
         if (isWaiting)
         {
             return;
         }
-        // ¸ñÀûÁö¿¡ µµÂøÇß´ÂÁö È®ÀÎ
-        if (NPCMovementUtils.Instance.isArrived(agent))
+        // ëª©ì ì§€ì— ë„ì°©í–ˆëŠ”ì§€ í™•ì¸
+        if (Managers.NPCManager.isArrived(agent))
             StartCoroutine(MoveToNextWaypointAfterWait());
     }
     private IEnumerator MoveToNextWaypointAfterWait()
@@ -59,7 +59,7 @@ public class InpatientController : MonoBehaviour
         if(random <= 85)
         {
             agent.SetDestination(waypoints[0].GetRandomPointInRange());
-            yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
+            yield return new WaitUntil(() => Managers.NPCManager.isArrived(agent));
             waypoints[0].is_empty = false;
             prevWaypointIndex = 0;
         }
@@ -84,8 +84,7 @@ public class InpatientController : MonoBehaviour
         }
     }
 
-
-    //°£È£»ç°¡ ¿Ã ¶§±îÁö ´ë±â ÄÚ·çÆ¾
+    //ê°„í˜¸ì‚¬ê°€ ì˜¬ ë•Œê¹Œì§€ ëŒ€ê¸° ì½”ë£¨í‹´
     public IEnumerator WaitForNurse()
     {
         agent.isStopped = true;

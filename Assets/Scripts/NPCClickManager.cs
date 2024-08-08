@@ -1,40 +1,40 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// NPCClickManager Å¬·¡½º´Â NPC(¿©±â¼­´Â °£È£»ç)¸¦ °Ë»öÇÏ°í, ¸¶½ºÅ©¸¦ Âø¿ëÇÏ°Å³ª °İ¸®ÇÏ´Â µîÀÇ ÀÛ¾÷À» ¼öÇàÇÕ´Ï´Ù.
+// NPCClickManager í´ë˜ìŠ¤ëŠ” NPC(ì—¬ê¸°ì„œëŠ” ê°„í˜¸ì‚¬)ë¥¼ ê²€ìƒ‰í•˜ê³ , ë§ˆìŠ¤í¬ë¥¼ ì°©ìš©í•˜ê±°ë‚˜ ê²©ë¦¬í•˜ëŠ” ë“±ì˜ ì‘ì—…ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
 public class NPCClickManager : MonoBehaviour
 {
-    // ¹Ú½ºÄ³½ºÆ®ÀÇ °Å¸® ¼³Á¤
-    public float boxCastDistance = 100f;  // ¹Ú½ºÄ³½ºÆ® °Å¸®
-    // ¹Ú½ºÄ³½ºÆ®ÀÇ Å©±â ¼³Á¤
-    public Vector3 boxCastSize = new Vector3(100f, 1f, 100f); // ¹Ú½ºÄ³½ºÆ® Å©±â
-    // NPCÀÇ ÅÂ±×¸¦ ¼³Á¤ (¿©±â¼­´Â 'Nurse')
-    public string npcTag = "Nurse"; // Nurse ÅÂ±×
+    // ë°•ìŠ¤ìºìŠ¤íŠ¸ì˜ ê±°ë¦¬ ì„¤ì •
+    public float boxCastDistance = 100f;  // ë°•ìŠ¤ìºìŠ¤íŠ¸ ê±°ë¦¬
+    // ë°•ìŠ¤ìºìŠ¤íŠ¸ì˜ í¬ê¸° ì„¤ì •
+    public Vector3 boxCastSize = new Vector3(100f, 1f, 100f); // ë°•ìŠ¤ìºìŠ¤íŠ¸ í¬ê¸°
+    // NPCì˜ íƒœê·¸ë¥¼ ì„¤ì • (ì—¬ê¸°ì„œëŠ” 'Nurse')
+    public string npcTag = "Nurse"; // Nurse íƒœê·¸
 
-    // °£È£»ç¸¦ °Ë»öÇÏ´Â ¸Ş¼­µå, origin À§Ä¡¿¡¼­ °¡Àå °¡±î¿î °£È£»ç¸¦ Ã£½À´Ï´Ù.
+    // ê°„í˜¸ì‚¬ë¥¼ ê²€ìƒ‰í•˜ëŠ” ë©”ì„œë“œ, origin ìœ„ì¹˜ì—ì„œ ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ë¥¼ ì°¾ìŠµë‹ˆë‹¤.
     public GameObject SearchNurse(Vector3 origin)
     {
         Transform closestNurse = null;
         float closestDistance = Mathf.Infinity;
-        // 'Nurse' ÅÂ±×¸¦ °¡Áø ¸ğµç °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ Ã£½À´Ï´Ù.
+        // 'Nurse' íƒœê·¸ë¥¼ ê°€ì§„ ëª¨ë“  ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ìŠµë‹ˆë‹¤.
         GameObject[] nurses = GameObject.FindGameObjectsWithTag(npcTag);
 
         foreach (GameObject nurse in nurses)
         {
-            // °¢ °£È£»çÀÇ NurseController ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
+            // ê° ê°„í˜¸ì‚¬ì˜ NurseController ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
             NurseController nurseController = nurse.GetComponent<NurseController>();
-            // °£È£»ç°¡ ±Ù¹« ÁßÀÌ°í ÀÇ»ç »ç¹«½Ç¿¡¼­ ´ë±â ÁßÀÌ¸é °Ç³Ê¶İ´Ï´Ù.
+            // ê°„í˜¸ì‚¬ê°€ ê·¼ë¬´ ì¤‘ì´ê³  ì˜ì‚¬ ì‚¬ë¬´ì‹¤ì—ì„œ ëŒ€ê¸° ì¤‘ì´ë©´ ê±´ë„ˆëœë‹ˆë‹¤.
             if (nurseController.isWorking || nurseController.isWaitingAtDoctorOffice || nurseController.isRest)
             {
                 continue;
             }
-            // °£È£»ç°¡ °°Àº Ãş¿¡ ÀÖ´ÂÁö È®ÀÎÇÕ´Ï´Ù.
+            // ê°„í˜¸ì‚¬ê°€ ê°™ì€ ì¸µì— ìˆëŠ”ì§€ í™•ì¸í•©ë‹ˆë‹¤.
             if (Mathf.Abs(origin.y - nurse.transform.position.y) <= 1.0f)
             {
-                // origin°ú °£È£»ç »çÀÌÀÇ °Å¸®¸¦ °è»êÇÕ´Ï´Ù.
+                // originê³¼ ê°„í˜¸ì‚¬ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
                 float distance = Vector3.Distance(origin, nurse.transform.position);
-                // °¡Àå °¡±î¿î °£È£»ç¸¦ ¾÷µ¥ÀÌÆ®ÇÕ´Ï´Ù.
+                // ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ë¥¼ ì—…ë°ì´íŠ¸í•©ë‹ˆë‹¤.
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
@@ -42,7 +42,7 @@ public class NPCClickManager : MonoBehaviour
                 }
             }
         }
-        // °¡Àå °¡±î¿î °£È£»ç°¡ ÀÖÀ¸¸é ·Î±×¿¡ ÀÌ¸§À» Ãâ·ÂÇÕ´Ï´Ù.
+        // ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ê°€ ìˆìœ¼ë©´ ë¡œê·¸ì— ì´ë¦„ì„ ì¶œë ¥í•©ë‹ˆë‹¤.
         if (closestNurse != null)
         {
             Person person = closestNurse.GetComponent<Person>();
@@ -55,46 +55,46 @@ public class NPCClickManager : MonoBehaviour
         {
             Debug.Log("No Nurse found.");
         }
-        // °¡Àå °¡±î¿î °£È£»çÀÇ °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+        // ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ì˜ ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
         return closestNurse.gameObject;
     }
 
-    // °¡Àå °¡±î¿î °£È£»ç°¡ ¸¶½ºÅ©¸¦ Âø¿ëÇÏµµ·Ï Áö½ÃÇÏ´Â ¸Ş¼­µå
+    // ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ê°€ ë§ˆìŠ¤í¬ë¥¼ ì°©ìš©í•˜ë„ë¡ ì§€ì‹œí•˜ëŠ” ë©”ì„œë“œ
     public void WearingMask(GameObject closestNurse)
     {
-        // OutpatientController ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Í¼­ nurseSignalÀ» false·Î ¼³Á¤ÇÏ°í ÄÚ·çÆ¾À» ½ÃÀÛÇÕ´Ï´Ù.
+        // OutpatientController ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì™€ì„œ nurseSignalì„ falseë¡œ ì„¤ì •í•˜ê³  ì½”ë£¨í‹´ì„ ì‹œì‘í•©ë‹ˆë‹¤.
         OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
         outpatientController.nurseSignal = false;
         outpatientController.StartCoroutine(outpatientController.WaitForNurse());
-        // °£È£»çÀÇ NurseController ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
+        // ê°„í˜¸ì‚¬ì˜ NurseController ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
         NurseController nurseController = closestNurse.GetComponent<NurseController>();
         if (nurseController == null)
         {
-            Debug.LogError("nurseController¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("nurseControllerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
-            // °£È£»ç°¡ È¯ÀÚ¿¡°Ô °¡µµ·Ï Áö½ÃÇÕ´Ï´Ù.
+            // ê°„í˜¸ì‚¬ê°€ í™˜ìì—ê²Œ ê°€ë„ë¡ ì§€ì‹œí•©ë‹ˆë‹¤.
             nurseController.StartCoroutine(nurseController.GoToPatient(gameObject));
         }
     }
 
-    // °¡Àå °¡±î¿î °£È£»ç¸¦ °İ¸®½Ç·Î º¸³»´Â ¸Ş¼­µå
+    // ê°€ì¥ ê°€ê¹Œìš´ ê°„í˜¸ì‚¬ë¥¼ ê²©ë¦¬ì‹¤ë¡œ ë³´ë‚´ëŠ” ë©”ì„œë“œ
     public void Quarantine(GameObject closestNurse)
     {
-        // OutpatientController ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿Í¼­ nurseSignalÀ» false·Î ¼³Á¤ÇÏ°í ÄÚ·çÆ¾À» ½ÃÀÛÇÕ´Ï´Ù.
+        // OutpatientController ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì™€ì„œ nurseSignalì„ falseë¡œ ì„¤ì •í•˜ê³  ì½”ë£¨í‹´ì„ ì‹œì‘í•©ë‹ˆë‹¤.
         OutpatientController outpatientController = gameObject.GetComponent<OutpatientController>();
         outpatientController.nurseSignal = false;
         outpatientController.StartCoroutine(outpatientController.WaitForNurse());
-        // °£È£»çÀÇ NurseController ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
+        // ê°„í˜¸ì‚¬ì˜ NurseController ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
         NurseController nurseController = closestNurse.GetComponent<NurseController>();
         if (nurseController == null)
         {
-            Debug.LogError("nurseController¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("nurseControllerë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
         else
         {
-            // °£È£»ç°¡ °İ¸®½Ç·Î °¡µµ·Ï Áö½ÃÇÕ´Ï´Ù.
+            // ê°„í˜¸ì‚¬ê°€ ê²©ë¦¬ì‹¤ë¡œ ê°€ë„ë¡ ì§€ì‹œí•©ë‹ˆë‹¤.
             nurseController.GoToNegativePressureRoom(gameObject);
         }
     }

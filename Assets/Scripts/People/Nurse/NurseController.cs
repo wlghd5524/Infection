@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,74 +6,73 @@ using UnityEngine.AI;
 
 public class NurseController : MonoBehaviour
 {
-    private Animator animator; // ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®
-    private NavMeshAgent agent; // ³×ºñ°ÔÀÌ¼Ç ¿¡ÀÌÀüÆ® ÄÄÆ÷³ÍÆ®
+    private Animator animator; // ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸
+    private NavMeshAgent agent; // ë„¤ë¹„ê²Œì´ì…˜ ì—ì´ì „íŠ¸ ì»´í¬ë„ŒíŠ¸
 
-    public bool isWorking = false; // °£È£»ç°¡ ÀÏÇÏ´Â ÁßÀÎÁö ¿©ºÎ
-    public bool isWaiting = false; // °£È£»ç°¡ ±â´Ù¸®´Â ÁßÀÎÁö ¿©ºÎ
+    public bool isWorking = false; // ê°„í˜¸ì‚¬ê°€ ì¼í•˜ëŠ” ì¤‘ì¸ì§€ ì—¬ë¶€
+    public bool isWaiting = false; // ê°„í˜¸ì‚¬ê°€ ê¸°ë‹¤ë¦¬ëŠ” ì¤‘ì¸ì§€ ì—¬ë¶€
     public bool isRest = false;
     public bool isWaitingAtDoctorOffice = false;
 
-    public GameObject targetPatient; // Å¸°Ù È¯ÀÚ
-    public List<Waypoint> waypoints; // ¿şÀÌÆ÷ÀÎÆ® ¸®½ºÆ®
+    public GameObject targetPatient; // íƒ€ê²Ÿ í™˜ì
+    public List<Waypoint> waypoints; // ì›¨ì´í¬ì¸íŠ¸ ë¦¬ìŠ¤íŠ¸
 
     public int ward = 0;
     private void Awake()
     {
-        animator = GetComponent<Animator>(); // ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ® ÇÒ´ç
-        agent = GetComponent<NavMeshAgent>(); // ³×ºñ°ÔÀÌ¼Ç ¿¡ÀÌÀüÆ® ÄÄÆ÷³ÍÆ® ÇÒ´ç
-        agent.avoidancePriority = Random.Range(0, 100); // ¿¡ÀÌÀüÆ® È¸ÇÇ ¿ì¼±¼øÀ§ ¼³Á¤
+        animator = GetComponent<Animator>(); // ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸ í• ë‹¹
+        agent = GetComponent<NavMeshAgent>(); // ë„¤ë¹„ê²Œì´ì…˜ ì—ì´ì „íŠ¸ ì»´í¬ë„ŒíŠ¸ í• ë‹¹
+        agent.avoidancePriority = Random.Range(0, 100); // ì—ì´ì „íŠ¸ íšŒí”¼ ìš°ì„ ìˆœìœ„ ì„¤ì •
     }
 
-    // Start´Â Ã¹ ÇÁ·¹ÀÓ ¾÷µ¥ÀÌÆ® Àü¿¡ È£ÃâµË´Ï´Ù.
+    // StartëŠ” ì²« í”„ë ˆì„ ì—…ë°ì´íŠ¸ ì „ì— í˜¸ì¶œë©ë‹ˆë‹¤.
     void Start()
     {
 
     }
 
-    // Update´Â ¸Å ÇÁ·¹ÀÓ È£ÃâµË´Ï´Ù.
+    // UpdateëŠ” ë§¤ í”„ë ˆì„ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Update()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç ¾÷µ¥ÀÌÆ®
-        NPCMovementUtils.Instance.UpdateAnimation(agent,animator);
+        // ì• ë‹ˆë©”ì´ì…˜ ì—…ë°ì´íŠ¸
+        Managers.NPCManager.UpdateAnimation(agent,animator);
 
         if (isWaiting || isRest)
         {
-            return; // ±â´Ù¸®´Â ÁßÀÌ¸é ¸®ÅÏ
+            return; // ê¸°ë‹¤ë¦¬ëŠ” ì¤‘ì´ë©´ ë¦¬í„´
         }
         
         if (isWorking)
             return;
 
-        if (NPCMovementUtils.Instance.isArrived(agent))
+        if (Managers.NPCManager.isArrived(agent))
         {
             if(!isWorking)
             {
-                StartCoroutine(MoveToNextWaypointAfterWait()); // ´ÙÀ½ ÀÛ¾÷À» À§ÇØ ´ë±â ÈÄ ÀÌµ¿
+                StartCoroutine(MoveToNextWaypointAfterWait()); // ë‹¤ìŒ ì‘ì—…ì„ ìœ„í•´ ëŒ€ê¸° í›„ ì´ë™
             }
-            
         }
     }
 
-    // È¯ÀÚ¿¡°Ô ÀÌµ¿
+    // í™˜ìì—ê²Œ ì´ë™
     public IEnumerator GoToPatient(GameObject patientGameObject)
     {
-        isWorking = true; // ÀÏÇÏ´Â ÁßÀ¸·Î ¼³Á¤
-        Vector3 targetPatientPosition = NPCMovementUtils.Instance.GetPositionInFront(transform, patientGameObject.transform, 0.5f); // È¯ÀÚ ¾ÕÀÇ ÀÓÀÇ À§Ä¡ °è»ê
-        agent.SetDestination(targetPatientPosition); // ¿¡ÀÌÀüÆ® ¸ñÀûÁö ¼³Á¤
-        targetPatient = patientGameObject; // Å¸°Ù È¯ÀÚ ¼³Á¤
+        isWorking = true; // ì¼í•˜ëŠ” ì¤‘ìœ¼ë¡œ ì„¤ì •
+        Vector3 targetPatientPosition = Managers.NPCManager.GetPositionInFront(transform, patientGameObject.transform, 0.5f); // í™˜ì ì•ì˜ ì„ì˜ ìœ„ì¹˜ ê³„ì‚°
+        agent.SetDestination(targetPatientPosition); // ì—ì´ì „íŠ¸ ëª©ì ì§€ ì„¤ì •
+        targetPatient = patientGameObject; // íƒ€ê²Ÿ í™˜ì ì„¤ì •
 
         yield return new WaitUntil(() => !agent.pathPending);
         yield return new WaitUntil(() => agent.remainingDistance == 0);
 
-        NPCMovementUtils.Instance.FaceEachOther(gameObject, targetPatient); // °£È£»ç¿Í È¯ÀÚ°¡ ¼­·Î¸¦ ¹Ù¶óº¸°Ô ¼³Á¤
+        Managers.NPCManager.FaceEachOther(gameObject, targetPatient); // ê°„í˜¸ì‚¬ì™€ í™˜ìê°€ ì„œë¡œë¥¼ ë°”ë¼ë³´ê²Œ ì„¤ì •
         OutpatientController targetPatientController = targetPatient.GetComponent<OutpatientController>();
-        targetPatientController.nurseSignal = true; // È¯ÀÚ¿¡°Ô °£È£»ç°¡ µµÂøÇßÀ½À» ¾Ë¸²
-        //targetPatientController.nurse = gameObject; // °£È£»ç ¼³Á¤
+        targetPatientController.nurseSignal = true; // í™˜ìì—ê²Œ ê°„í˜¸ì‚¬ê°€ ë„ì°©í–ˆìŒì„ ì•Œë¦¼
+        //targetPatientController.nurse = gameObject; // ê°„í˜¸ì‚¬ ì„¤ì •
         targetPatientController.StartCoroutine(targetPatientController.FollowNurse(gameObject));
         agent.speed -= 1;
-        yield return StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatientController)); // °İ¸®µÈ È¯ÀÚ¶ó¸é À½¾Ğ½Ç·Î ÀÌµ¿
-        yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
+        yield return StartCoroutine(WaitAndGoToNegativePressureRoom(targetPatientController)); // ê²©ë¦¬ëœ í™˜ìë¼ë©´ ìŒì••ì‹¤ë¡œ ì´ë™
+        yield return new WaitUntil(() => Managers.NPCManager.isArrived(agent));
         agent.speed += 1;
         isWorking = false;
         targetPatientController.isFollowingNurse = false;
@@ -82,30 +81,30 @@ public class NurseController : MonoBehaviour
 
 
 
-    // À½¾Ğ½Ç·Î ÀÌµ¿
+    // ìŒì••ì‹¤ë¡œ ì´ë™
     public void GoToNegativePressureRoom(GameObject patientGameObject)
     {
-        StartCoroutine(GoToPatient(patientGameObject)); // È¯ÀÚ¿¡°Ô ÀÌµ¿
+        StartCoroutine(GoToPatient(patientGameObject)); // í™˜ìì—ê²Œ ì´ë™
     }
 
-    // À½¾Ğ½Ç·Î ÀÌµ¿À» À§ÇÑ ´ë±â ÈÄ ÀÌµ¿ ÄÚ·çÆ¾
+    // ìŒì••ì‹¤ë¡œ ì´ë™ì„ ìœ„í•œ ëŒ€ê¸° í›„ ì´ë™ ì½”ë£¨í‹´
     IEnumerator WaitAndGoToNegativePressureRoom(OutpatientController targetPatientController)
     {
-        //agent.isStopped = true; // ¿¡ÀÌÀüÆ® Á¤Áö
-        //yield return new WaitForSeconds(1); // 1ÃÊ ´ë±â
-        //agent.isStopped = false; // ¿¡ÀÌÀüÆ® Àç°³
+        //agent.isStopped = true; // ì—ì´ì „íŠ¸ ì •ì§€
+        //yield return new WaitForSeconds(1); // 1ì´ˆ ëŒ€ê¸°
+        //agent.isStopped = false; // ì—ì´ì „íŠ¸ ì¬ê°œ
 
         
-        GameObject parentObject = GameObject.Find("NurseWaypoints");
+        Transform parentTransform = GameObject.Find("Waypoints").transform;
 
         for(int i = 0;i<4;i++)
         {
-            NPRoom nPRoom = parentObject.transform.Find("N-PRoom (" + i + ")").GetComponent<NPRoom>(); // À½¾Ğ½Ç ¿şÀÌÆ÷ÀÎÆ® Ã£±â
+            NPRoom nPRoom = parentTransform.Find("N-PRoom (" + i + ")").GetComponent<NPRoom>(); // ìŒì••ì‹¤ ì›¨ì´í¬ì¸íŠ¸ ì°¾ê¸°
             if (nPRoom.is_empty)
             {
                 targetPatientController.nPRoom = nPRoom;
                 nPRoom.is_empty = false;
-                agent.SetDestination(nPRoom.GetRandomPointInRange()); // À½¾Ğ½Ç·Î ÀÌµ¿
+                agent.SetDestination(nPRoom.GetRandomPointInRange()); // ìŒì••ì‹¤ë¡œ ì´ë™
                 break;
             }
         }
@@ -115,15 +114,15 @@ public class NurseController : MonoBehaviour
         yield return new WaitUntil(() => !agent.pathPending);
     }
 
-    // ´ë±â ÈÄ ·£´ı ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿ ÄÚ·çÆ¾
+    // ëŒ€ê¸° í›„ ëœë¤ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™ ì½”ë£¨í‹´
     public IEnumerator MoveToNextWaypointAfterWait()
     {
-        isWaiting = true; // ±â´Ù¸®´Â ÁßÀ¸·Î ¼³Á¤
-        yield return new WaitForSeconds(1.5f); // 1ÃÊ ´ë±â
-        isWaiting = false; // ±â´Ù¸®´Â Áß ÇØÁ¦
+        isWaiting = true; // ê¸°ë‹¤ë¦¬ëŠ” ì¤‘ìœ¼ë¡œ ì„¤ì •
+        yield return new WaitForSeconds(1.5f); // 1ì´ˆ ëŒ€ê¸°
+        isWaiting = false; // ê¸°ë‹¤ë¦¬ëŠ” ì¤‘ í•´ì œ
         if(waypoints.Count > 0)
         {
-            if (waypoints.Count == 5)  //Áø·á½Ç ¾Õ ´ë±â °£È£»çµé
+            if (waypoints.Count == 5)  //ì§„ë£Œì‹¤ ì• ëŒ€ê¸° ê°„í˜¸ì‚¬ë“¤
             {
                 for(int i = 0;i<5;i++)
                 {
@@ -139,16 +138,16 @@ public class NurseController : MonoBehaviour
                 }
             }
 
-            else if(waypoints.Count == 7) //ÀÔ¿ø½Ç ´ë±â °£È£»çµé
+            else if(waypoints.Count == 7) //ì…ì›ì‹¤ ëŒ€ê¸° ê°„í˜¸ì‚¬ë“¤
             {
                 int random = Random.Range(1, waypoints.Count);
                 if (!waypoints[random].is_empty && waypoints[random] is BedWaypoint bed)
                 {
                     InpatientController targetInpatientController = bed.inpatient.GetComponent<InpatientController>();
                     targetInpatientController.StartCoroutine(targetInpatientController.WaitForNurse());
-                    agent.SetDestination(NPCMovementUtils.Instance.GetPositionInFront(transform,bed.inpatient.transform, 0.75f));
-                    yield return new WaitUntil(() => NPCMovementUtils.Instance.isArrived(agent));
-                    NPCMovementUtils.Instance.FaceEachOther(bed.inpatient, gameObject);
+                    agent.SetDestination(Managers.NPCManager.GetPositionInFront(transform,bed.inpatient.transform, 0.75f));
+                    yield return new WaitUntil(() => Managers.NPCManager.isArrived(agent));
+                    Managers.NPCManager.FaceEachOther(bed.inpatient, gameObject);
                     yield return new WaitForSeconds(1.5f);
                     targetInpatientController.nurseSignal = true;
                 }
@@ -159,7 +158,7 @@ public class NurseController : MonoBehaviour
             }
             else
             {
-                agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].GetRandomPointInRange()); // ·£´ı ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿
+                agent.SetDestination(waypoints[Random.Range(0, waypoints.Count)].GetRandomPointInRange()); // ëœë¤ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™
             }
         }
     }

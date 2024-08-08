@@ -1,87 +1,87 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class OutpatientCreator : MonoBehaviour
 {
-    public static int numberOfOutpatient = 0; // ÇöÀç ¿Ü·¡ È¯ÀÚ ¼ö
-    public List<Waypoint> spawnAreas = new List<Waypoint>(); // ¿Ü·¡ È¯ÀÚ°¡ »ı¼ºµÉ À§Ä¡ ¸®½ºÆ®
-    public float infectionRate = 0.03f; // °¨¿° È®·ü
-    public float spawnDelay = 1f; // »ı¼º ´ë±â ½Ã°£
-    private bool isWaiting = false; // ´ë±â »óÅÂ ÇÃ·¡±×
+    public static int numberOfOutpatient = 0; // í˜„ì¬ ì™¸ë˜ í™˜ì ìˆ˜
+    public List<Waypoint> spawnAreas = new List<Waypoint>(); // ì™¸ë˜ í™˜ìê°€ ìƒì„±ë  ìœ„ì¹˜ ë¦¬ìŠ¤íŠ¸
+    public float infectionRate = 0.03f; // ê°ì—¼ í™•ë¥ 
+    public float spawnDelay = 1f; // ìƒì„± ëŒ€ê¸° ì‹œê°„
+    private bool isWaiting = false; // ëŒ€ê¸° ìƒíƒœ í”Œë˜ê·¸
 
-    // Start´Â Ã³À½ ÇÁ·¹ÀÓÀÌ ¾÷µ¥ÀÌÆ®µÇ±â Àü¿¡ È£ÃâµË´Ï´Ù.
+    // StartëŠ” ì²˜ìŒ í”„ë ˆì„ì´ ì—…ë°ì´íŠ¸ë˜ê¸° ì „ì— í˜¸ì¶œë©ë‹ˆë‹¤.
     void Start()
     {
-        GameObject go = GameObject.Find("Gateways"); // "Gateways" ¿ÀºêÁ§Æ® Ã£±â
-        if (go != null)
+        Transform gatewayTransform = Managers.NPCManager.gatewayTransform; // "Gateways" ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
+        if (gatewayTransform != null)
         {
-            for (int i = 0; i < go.transform.childCount; i++) // ÀÚ½Ä ¿ÀºêÁ§Æ® ¼øÈ¸
+            for (int i = 0; i < gatewayTransform.childCount; i++) // ìì‹ ì˜¤ë¸Œì íŠ¸ ìˆœíšŒ
             {
-                Waypoint waypointRange = go.transform.GetChild(i).GetComponent<Waypoint>(); // Waypoint ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+                Waypoint waypointRange = gatewayTransform.GetChild(i).GetComponent<Waypoint>(); // Waypoint ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
                 if (waypointRange != null)
                 {
-                    spawnAreas.Add(waypointRange); // Waypoint ¸®½ºÆ®¿¡ Ãß°¡
+                    spawnAreas.Add(waypointRange); // Waypoint ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
                 }
                 else
                 {
-                    Debug.LogError("Gateways ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡ Waypoint ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                    Debug.LogError("Gateways ìì‹ ì˜¤ë¸Œì íŠ¸ì— Waypoint ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
                 }
             }
         }
         else
         {
-            Debug.LogError("Gateways °ÔÀÓ ¿ÀºêÁ§Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("Gateways ê²Œì„ ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 
-    // Update´Â ¸Å ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµË´Ï´Ù.
+    // UpdateëŠ” ë§¤ í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë©ë‹ˆë‹¤.
     void Update()
     {
-        // ´ë±â ÁßÀÌ ¾Æ´Ï°í, ¿Ü·¡ È¯ÀÚ ¼ö°¡ ÃÖ´ëÄ¡º¸´Ù ÀûÀ» ¶§ ¿Ü·¡ È¯ÀÚ »ı¼º
-        if (!isWaiting && numberOfOutpatient < ObjectPoolingManager.Instance.maxOfOutpatient)
+        // ëŒ€ê¸° ì¤‘ì´ ì•„ë‹ˆê³ , ì™¸ë˜ í™˜ì ìˆ˜ê°€ ìµœëŒ€ì¹˜ë³´ë‹¤ ì ì„ ë•Œ ì™¸ë˜ í™˜ì ìƒì„±
+        if (!isWaiting && numberOfOutpatient < Managers.ObjectPooling.maxOfOutpatient)
         {
             StartCoroutine(SpawnOutpatient());
         }
     }
 
-    // ¿Ü·¡ È¯ÀÚ »ı¼º ÄÚ·çÆ¾
+    // ì™¸ë˜ í™˜ì ìƒì„± ì½”ë£¨í‹´
     IEnumerator SpawnOutpatient()
     {
-        isWaiting = true; // ´ë±â »óÅÂ·Î ¼³Á¤
-        Vector3 spawnPosition = spawnAreas[Random.Range(0, spawnAreas.Count)].GetRandomPointInRange(); // ·£´ı »ı¼º À§Ä¡ ¼³Á¤
-        GameObject newOutpatient = ObjectPoolingManager.Instance.ActivateOutpatient(spawnPosition); // ¿Ü·¡ È¯ÀÚ È°¼ºÈ­
+        isWaiting = true; // ëŒ€ê¸° ìƒíƒœë¡œ ì„¤ì •
+        Vector3 spawnPosition = spawnAreas[Random.Range(0, spawnAreas.Count)].GetRandomPointInRange(); // ëœë¤ ìƒì„± ìœ„ì¹˜ ì„¤ì •
+        GameObject newOutpatient = Managers.ObjectPooling.ActivateOutpatient(spawnPosition); // ì™¸ë˜ í™˜ì í™œì„±í™”
         if (newOutpatient != null)
         {
-            Person newOutPatientPerson = newOutpatient.GetComponent<Person>(); // Person ÄÄÆ÷³ÍÆ® °¡Á®¿À±â
+            Person newOutPatientPerson = newOutpatient.GetComponent<Person>(); // Person ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì˜¤ê¸°
             if (newOutPatientPerson != null)
             {
-                // °¨¿° »óÅÂ ¼³Á¤
+                // ê°ì—¼ ìƒíƒœ ì„¤ì •
                 if (Random.value < infectionRate)
                 {
-                    if (StageManager.Instance.stage == 1)
+                    if (Managers.Stage.stage == 1)
                     {
                         newOutPatientPerson.status = InfectionState.Stage1;
                     }
-                    else if (StageManager.Instance.stage == 2)
+                    else if (Managers.Stage.stage == 2)
                     {
                         newOutPatientPerson.status = InfectionState.Stage2;
                     }
                 }
-                newOutPatientPerson.role = Role.Outpatient; // ¿ªÇÒ ¼³Á¤
-                numberOfOutpatient++; // ¿Ü·¡ È¯ÀÚ ¼ö Áõ°¡
+                newOutPatientPerson.role = Role.Outpatient; // ì—­í•  ì„¤ì •
+                numberOfOutpatient++; // ì™¸ë˜ í™˜ì ìˆ˜ ì¦ê°€
             }
             else
             {
-                Debug.LogError("»õ ¿Ü·¡ È¯ÀÚ¿¡ Person ÄÄÆ÷³ÍÆ®°¡ ¾ø½À´Ï´Ù.");
+                Debug.LogError("ìƒˆ ì™¸ë˜ í™˜ìì— Person ì»´í¬ë„ŒíŠ¸ê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
         }
         else
         {
-            Debug.LogError("»õ ¿Ü·¡ È¯ÀÚ¸¦ È°¼ºÈ­ÇÏ´Â µ¥ ½ÇÆĞÇß½À´Ï´Ù.");
+            Debug.LogError("ìƒˆ ì™¸ë˜ í™˜ìë¥¼ í™œì„±í™”í•˜ëŠ” ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
         }
 
-        yield return new WaitForSeconds(spawnDelay); // ´ë±â ½Ã°£
-        isWaiting = false; // ´ë±â »óÅÂ ÇØÁ¦
+        yield return new WaitForSeconds(spawnDelay); // ëŒ€ê¸° ì‹œê°„
+        isWaiting = false; // ëŒ€ê¸° ìƒíƒœ í•´ì œ
     }
 }

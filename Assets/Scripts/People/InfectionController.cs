@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class InfectionController : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         InfectionState thisPersonStatus = GetComponent<Person>().status;
-        // Ãæµ¹ÇÑ ¿ÀºêÁ§Æ®ÀÇ ·¹ÀÌ¾î°¡ ÁöÁ¤µÈ ·¹ÀÌ¾î ¸¶½ºÅ©¿¡ Æ÷ÇÔµÇ¾î ÀÖ´ÂÁö È®ÀÎ
+        // ì¶©ëŒí•œ ì˜¤ë¸Œì íŠ¸ì˜ ë ˆì´ì–´ê°€ ì§€ì •ëœ ë ˆì´ì–´ ë§ˆìŠ¤í¬ì— í¬í•¨ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸
         if (other.gameObject == gameObject || thisPersonStatus == InfectionState.Normal)
         {
             return;
@@ -22,24 +22,24 @@ public class InfectionController : MonoBehaviour
         }
         if(delayList.Contains(otherPerson))
         {
-            //Debug.Log("ÀÌ¹Ì Á¢ÃËµÈ »ç¶÷");
+            //Debug.Log("ì´ë¯¸ ì ‘ì´‰ëœ ì‚¬ëŒ");
             return;
         }
         if (otherPerson.status != InfectionState.Normal)
         {
             return;
         }
-        int random = Random.Range(0, InfectionManager.Instance.infectionProbability);
-        //°¨¿°µÇ´Â »ç¶÷ÀÇ °¨¿° ÀúÇ×¼ºÀ» °í·ÁÇÏ¿© °¨¿° È®·ü °è»ê
+        int random = Random.Range(0, Managers.Infection.infectionProbability);
+        //ê°ì—¼ë˜ëŠ” ì‚¬ëŒì˜ ê°ì—¼ ì €í•­ì„±ì„ ê³ ë ¤í•˜ì—¬ ê°ì—¼ í™•ë¥  ê³„ì‚°
         int totalRandom = Random.Range(0, 101);
         if (random - otherPerson.infectionResistance >= totalRandom)
         {
-            //Debug.Log(random - otherPerson.infectionResistance + " °ªÀÌ ³ª¿Ô±â ¶§¹®¿¡ °¨¿°µÊ");
+            //Debug.Log(random - otherPerson.infectionResistance + " ê°’ì´ ë‚˜ì™”ê¸° ë•Œë¬¸ì— ê°ì—¼ë¨");
             otherPerson.ChangeStatus(thisPersonStatus);
         }
         else
         {
-            //Debug.Log(random - otherPerson.infectionResistance + "°ªÀÌ ³ª¿Ô±â ¶§¹®¿¡ °¨¿°µÇÁö ¾ÊÀ½");
+            //Debug.Log(random - otherPerson.infectionResistance + "ê°’ì´ ë‚˜ì™”ê¸° ë•Œë¬¸ì— ê°ì—¼ë˜ì§€ ì•ŠìŒ");
         }
         delayList.Add(otherPerson);
         StartCoroutine(CoRemoveDelay(otherPerson));

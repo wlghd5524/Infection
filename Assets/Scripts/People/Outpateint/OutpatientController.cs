@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,15 +6,15 @@ using System.Linq;
 
 public class OutpatientController : MonoBehaviour
 {
-    // ÄÄÆ÷³ÍÆ® ÂüÁ¶
+    // ì»´í¬ë„ŒíŠ¸ ì°¸ì¡°
     private Animator animator;
     private NavMeshAgent agent;
 
-    // ¿şÀÌÆ÷ÀÎÆ® °ü·Ã º¯¼ö
+    // ì›¨ì´í¬ì¸íŠ¸ ê´€ë ¨ ë³€ìˆ˜
     public List<Waypoint> waypoints = new List<Waypoint>();
     public int waypointIndex = 0;
 
-    // »óÅÂ ÇÃ·¡±×
+    // ìƒíƒœ í”Œë˜ê·¸
     public bool isQuarantined = false;
     public bool isFollowingNurse = false;
     public bool isWaiting = false;
@@ -25,63 +25,59 @@ public class OutpatientController : MonoBehaviour
     public bool nurseSignal = false;
     public bool doctorSignal = false;
 
-    // ¾À ¿ÀºêÁ§Æ® ÂüÁ¶
-    GameObject parentObject;
-    GameObject gatewayObject;
-    int randomWard;
+    Transform wardTransform;
+    int ward;
     public GameObject nurse;
     public NPRoom nPRoom;
 
     private void Awake()
     {
-        // ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+        // ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.avoidancePriority = Random.Range(0, 100);
 
-        // ¾À ¿ÀºêÁ§Æ® Ã£±â
-        parentObject = GameObject.Find("OutpatientWaypoints");
-        gatewayObject = GameObject.Find("Gateways");
-        randomWard = Random.Range(0, 6);
+        ward = Random.Range(0, 6);
     }
 
     private void OnEnable()
     {
-        // Ã¹ ¹øÂ° ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
-        AddWaypoint(parentObject.transform, $"CounterWaypoint (0)");
+        // ì²« ë²ˆì§¸ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
+        wardTransform = Managers.NPCManager.waypointDictionary[(ward, "OutpatientWaypoints")];
+        AddWaypoint(wardTransform, $"CounterWaypoint (0)");
     }
 
     private void Update()
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç ¾÷µ¥ÀÌÆ®
-        NPCMovementUtils.Instance.UpdateAnimation(agent,animator);
+        // ì• ë‹ˆë©”ì´ì…˜ ì—…ë°ì´íŠ¸
+        Managers.NPCManager.UpdateAnimation(agent,animator);
 
-        // ´ë±â ÁßÀÌ¸é ÀÌµ¿ Ã³¸®ÇÏÁö ¾ÊÀ½
+        // ëŒ€ê¸° ì¤‘ì´ë©´ ì´ë™ ì²˜ë¦¬í•˜ì§€ ì•ŠìŒ
         if (isWaiting)
         {
             return;
         }
 
-        // ¸ñÀûÁö¿¡ µµÂøÇß´ÂÁö È®ÀÎ
-        if (NPCMovementUtils.Instance.isArrived(agent))
+        // ëª©ì ì§€ì— ë„ì°©í–ˆëŠ”ì§€ í™•ì¸
+        if (Managers.NPCManager.isArrived(agent))
         {
             if (waypointIndex == 4 && !isWaitingForNurse && !isFollowingNurse && !isQuarantined)
             {
-                // ¸ğµç ¿şÀÌÆ÷ÀÎÆ®¸¦ ¹æ¹®ÇßÀ¸¸é ºñÈ°¼ºÈ­
-                ObjectPoolingManager.Instance.DeactivateOutpatient(gameObject);
+                // ëª¨ë“  ì›¨ì´í¬ì¸íŠ¸ë¥¼ ë°©ë¬¸í–ˆìœ¼ë©´ ë¹„í™œì„±í™”
+                Managers.ObjectPooling.DeactivateOutpatient(gameObject);
                 OutpatientCreator.numberOfOutpatient--;
                 return;
             }
             
             else
             {
-                // ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿
+                // ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™
                 StartCoroutine(MoveToNextWaypointAfterWait());
             }
         }
     }
 
-    // ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿ÇÏ´Â ÄÚ·çÆ¾
+    // ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™í•˜ëŠ” ì½”ë£¨í‹´
     private IEnumerator MoveToNextWaypointAfterWait()
     {
         if (waypointIndex > 0 && waypoints[waypointIndex - 1] is DoctorOffice docOffice)
@@ -91,7 +87,7 @@ public class OutpatientController : MonoBehaviour
             targetDoctor.outpatientSignal = true;
             yield return new WaitForSeconds(1.0f);
             yield return new WaitUntil(() => doctorSignal);
-            NPCMovementUtils.Instance.FaceEachOther(docOffice.doctor, gameObject);
+            Managers.NPCManager.FaceEachOther(docOffice.doctor, gameObject);
         }
         isWaiting = true;
         yield return new WaitForSeconds(1.5f);
@@ -102,13 +98,13 @@ public class OutpatientController : MonoBehaviour
             yield break;
         }
 
-        // ÇöÀç ¿şÀÌÆ÷ÀÎÆ® ÀÎµ¦½º¿¡ µû¶ó ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ® Ãß°¡
+        // í˜„ì¬ ì›¨ì´í¬ì¸íŠ¸ ì¸ë±ìŠ¤ì— ë”°ë¼ ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€
         AddNextWaypoint();
 
         if (waypointIndex < waypoints.Count)
         {
             
-            // ÀÇ»ç »ç¹«½ÇÀÎ °æ¿ì ´ë±â
+            // ì˜ì‚¬ ì‚¬ë¬´ì‹¤ì¸ ê²½ìš° ëŒ€ê¸°
             if (waypoints[waypointIndex] is DoctorOffice doctorOffice)
             {
                 StartCoroutine(WaitForDoctorOffice(doctorOffice));
@@ -121,7 +117,7 @@ public class OutpatientController : MonoBehaviour
                 doctorController.outpatientSignal = false;
             }
 
-            // ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ®·Î ÀÌµ¿
+            // ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ë¡œ ì´ë™
             if (!isWaitingForDoctor)
             {
                 agent.SetDestination(waypoints[waypointIndex++].GetRandomPointInRange());
@@ -130,30 +126,30 @@ public class OutpatientController : MonoBehaviour
         }
     }
 
-    // ´ÙÀ½ ¿şÀÌÆ÷ÀÎÆ® Ãß°¡ ¸Ş¼­µå
+    // ë‹¤ìŒ ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€ ë©”ì„œë“œ
     private void AddNextWaypoint()
     {
         switch (waypointIndex)
         {
             case 0:
-                AddWaypoint(parentObject.transform, $"CounterWaypoint (0)");
+                AddWaypoint(wardTransform, $"CounterWaypoint (0)");
                 break;
             case 1:
-                AddWaypoint(parentObject.transform, $"SofaWaypoint (0)");
+                AddWaypoint(wardTransform, $"SofaWaypoint (0)");
                 break;
             case 2:
                 if (waypoints.Count < 3)
                 {
-                    AddWaypoint(parentObject.transform, $"Doctor'sOffice (0)");
+                    AddWaypoint(wardTransform, $"Doctor'sOffice (0)");
                 }
                 break;
             case 3:
-                AddWaypoint(gatewayObject.transform, $"Gateway ({Random.Range(0, 2)})");
+                AddWaypoint(Managers.NPCManager.gatewayTransform, $"Gateway ({Random.Range(0, 2)})");
                 break;
         }
     }
 
-    // ÀÇ»ç »ç¹«½Ç ´ë±â ÄÚ·çÆ¾
+    // ì˜ì‚¬ ì‚¬ë¬´ì‹¤ ëŒ€ê¸° ì½”ë£¨í‹´
     private IEnumerator WaitForDoctorOffice(DoctorOffice doctorOffice)
     {
         isWaitingForDoctor = true;
@@ -165,7 +161,7 @@ public class OutpatientController : MonoBehaviour
         isWaitingForDoctor = false;
     }
 
-    //°£È£»ç°¡ ¿Ã ¶§±îÁö ´ë±â ÄÚ·çÆ¾
+    //ê°„í˜¸ì‚¬ê°€ ì˜¬ ë•Œê¹Œì§€ ëŒ€ê¸° ì½”ë£¨í‹´
     public IEnumerator WaitForNurse()
     {
         agent.isStopped = true;
@@ -173,25 +169,17 @@ public class OutpatientController : MonoBehaviour
         agent.isStopped = false;
     }
 
-    // ¿şÀÌÆ÷ÀÎÆ® Ãß°¡ ¸Ş¼­µå
-    private void AddWaypoint(Transform parent, string childName)
+    // ì›¨ì´í¬ì¸íŠ¸ ì¶”ê°€ ë©”ì„œë“œ
+    private void AddWaypoint(Transform parentTransform, string childName)
     {
-        Transform waypointTransform;
-        if (waypointIndex == 3)
-        {
-            waypointTransform = parent.Find(childName);
-        }
-        else
-        {
-            waypointTransform = parent.Find("Ward (" + randomWard + ")").Find(childName);
-        }
+        Transform waypointTransform = parentTransform.Find(childName);
         if (waypointTransform != null)
         {
             Waypoint comp = waypointTransform.gameObject.GetComponent<Waypoint>();
             if (comp is DoctorOffice)
             {
-                // ÀÇ»ç »ç¹«½Ç ¼±ÅÃ ·ÎÁ÷
-                SelectDoctorOffice(waypointTransform, childName);
+                // ì˜ì‚¬ ì‚¬ë¬´ì‹¤ ì„ íƒ ë¡œì§
+                SelectDoctorOffice(parentTransform);
             }
             else
             {
@@ -207,14 +195,14 @@ public class OutpatientController : MonoBehaviour
         }
     }
 
-    // ÀÇ»ç »ç¹«½Ç ¼±ÅÃ ¸Ş¼­µå
-    private void SelectDoctorOffice(Transform officeTransform, string childName)
+    // ì˜ì‚¬ ì‚¬ë¬´ì‹¤ ì„ íƒ ë©”ì„œë“œ
+    private void SelectDoctorOffice(Transform parentTransform)
     {
-        // °¡´ÉÇÑ ÀÇ»ç »ç¹«½Ç ¸ñ·Ï »ı¼º
+        // ê°€ëŠ¥í•œ ì˜ì‚¬ ì‚¬ë¬´ì‹¤ ëª©ë¡ ìƒì„±
         Dictionary<DoctorOffice, int> countDic = new Dictionary<DoctorOffice, int>();
         for (int i = 0; i < 5; i++)
         {
-            DoctorOffice doctorOffice = officeTransform.parent.Find("Doctor'sOffice ("+ i +")").gameObject.GetComponent<DoctorOffice>();
+            DoctorOffice doctorOffice = parentTransform.Find("Doctor'sOffice ("+ i +")").gameObject.GetComponent<DoctorOffice>();
             GameObject searchedDoctor = doctorOffice.doctor;
             DoctorController doctorController = searchedDoctor.GetComponent<DoctorController>();
             if (doctorController.isResting)
@@ -228,7 +216,7 @@ public class OutpatientController : MonoBehaviour
             }
         }
 
-        // ÃÖÀûÀÇ ÀÇ»ç »ç¹«½Ç ¼±ÅÃ
+        // ìµœì ì˜ ì˜ì‚¬ ì‚¬ë¬´ì‹¤ ì„ íƒ
         if (countDic.Count > 0)
         {
             DoctorOffice searchedOffice = countDic
@@ -240,7 +228,7 @@ public class OutpatientController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("ÀÇ»ç¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogError("ì˜ì‚¬ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
     }
 

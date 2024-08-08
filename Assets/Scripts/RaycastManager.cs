@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,11 +7,11 @@ public class RaycastManager : MonoBehaviour
 {
     public static RaycastManager Instance { get; private set; }
 
-    public string npcLayerName = "NPC"; // NPC Layer ÀÌ¸§
+    public string npcLayerName = "NPC"; // NPC Layer ì´ë¦„
     private LayerMask npcLayerMask;     // Culling Mask
 
 
-    private GameObject lastHighlightedNPC = null; // ¸¶Áö¸·À¸·Î ÇÏÀÌ¶óÀÌÆ®µÈ NPC
+    private GameObject lastHighlightedNPC = null; // ë§ˆì§€ë§‰ìœ¼ë¡œ í•˜ì´ë¼ì´íŠ¸ëœ NPC
 
     private void Awake()
     {
@@ -29,10 +29,10 @@ public class RaycastManager : MonoBehaviour
     private void Start()
     {
         //mainCamera = Camera.main;
-        // NPC LayerÀÇ LayerMask ¼³Á¤
+        // NPC Layerì˜ LayerMask ì„¤ì •
         npcLayerMask = LayerMask.GetMask(npcLayerName);
     }
-
+    
     private void FixedUpdate()
     {
         HandleMouseInput();
@@ -41,23 +41,23 @@ public class RaycastManager : MonoBehaviour
 
     private void HandleMouseInput()
     {
-        if (Input.GetMouseButtonDown(0)) // ¿ŞÂÊ ¸¶¿ì½º ¹öÆ°ÀÌ Å¬¸¯µÇ¸é
+        if (Input.GetMouseButtonDown(0)) // ì™¼ìª½ ë§ˆìš°ìŠ¤ ë²„íŠ¼ì´ í´ë¦­ë˜ë©´
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // Ray¸¦ ½Ã°¢ÀûÀ¸·Î ±×¸®±â
+            // Rayë¥¼ ì‹œê°ì ìœ¼ë¡œ ê·¸ë¦¬ê¸°
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 2f);
 
-            // Ãæµ¹À» °¨ÁöÇÏµµ·Ï ¼³Á¤, NPC Layer¸¸ °Ë»ç
+            // ì¶©ëŒì„ ê°ì§€í•˜ë„ë¡ ì„¤ì •, NPC Layerë§Œ ê²€ì‚¬
             if (Physics.Raycast(ray, out hit, 100f, npcLayerMask))
             {
-                //Debug.Log("Raycast hit: " + hit.collider.name); // Raycast°¡ hitÇÑ Äİ¶óÀÌ´õÀÇ ÀÌ¸§ °¡Á®¿À±â
+                //Debug.Log("Raycast hit: " + hit.collider.name); // Raycastê°€ hití•œ ì½œë¼ì´ë”ì˜ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
 
-                // Ãæµ¹ ÁöÁ¡¿¡ ÀÛÀº ±¸¸¦ ±×·Á¼­ ½Ã°¢ÀûÀ¸·Î È®ÀÎ
+                // ì¶©ëŒ ì§€ì ì— ì‘ì€ êµ¬ë¥¼ ê·¸ë ¤ì„œ ì‹œê°ì ìœ¼ë¡œ í™•ì¸
                 Debug.DrawRay(hit.point, Vector3.up * 1f, Color.green, 2f);
 
-                // Ãæµ¹ÇÑ Collider¸¦ °¡Áø ¿ÀºêÁ§Æ®¿Í ±× ºÎ¸ğ ¿ÀºêÁ§Æ®µéÀ» Å½»öÇÏ¿© Person ÄÄÆ÷³ÍÆ®¸¦ Ã£À½
+                // ì¶©ëŒí•œ Colliderë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ì™€ ê·¸ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë“¤ì„ íƒìƒ‰í•˜ì—¬ Person ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ìŒ
                 Transform currentTransform = hit.collider.transform;
 
                 while (currentTransform != null)
@@ -65,14 +65,14 @@ public class RaycastManager : MonoBehaviour
                     Person person = currentTransform.GetComponent<Person>();
                     if (person != null)
                     {
-                        Debug.Log("NPC clicked: " + person.gameObject.name);    // Å¬¸¯µÈ NPCÀÇ PersonÀ¸·Î ÀÌ¸§ °¡Á®¿À±â
+                        Debug.Log("NPC clicked: " + person.gameObject.name);    // í´ë¦­ëœ NPCì˜ Personìœ¼ë¡œ ì´ë¦„ ê°€ì ¸ì˜¤ê¸°
                         NPCClickManager targetNPCCLickManager = currentTransform.GetComponent<NPCClickManager>();
                         if (person.gameObject.CompareTag("OutPatient"))
                         {
-                            //¸¶½ºÅ© ¾º¿ì±â
+                            //ë§ˆìŠ¤í¬ ì”Œìš°ê¸°
                             //targetNPCCLickManager.WearingMask(targetNPCCLickManager.SearchNurse(person.gameObject.transform.position));
 
-                            //À½¾Ğ½Ç µ¥·Á°¡±â
+                            //ìŒì••ì‹¤ ë°ë ¤ê°€ê¸°
                             targetNPCCLickManager.Quarantine(targetNPCCLickManager.SearchNurse(person.gameObject.transform.position));
                         }
                             
@@ -102,7 +102,7 @@ public class RaycastManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 100f, npcLayerMask))
         {
-            // Ãæµ¹ÇÑ Collider¸¦ °¡Áø ¿ÀºêÁ§Æ®¿Í ±× ºÎ¸ğ ¿ÀºêÁ§Æ®µéÀ» Å½»öÇÏ¿© Person ÄÄÆ÷³ÍÆ®¸¦ Ã£À½
+            // ì¶©ëŒí•œ Colliderë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ì™€ ê·¸ ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ë“¤ì„ íƒìƒ‰í•˜ì—¬ Person ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ìŒ
             Transform currentTransform = hit.collider.transform;
 
             while (currentTransform != null)
@@ -112,10 +112,10 @@ public class RaycastManager : MonoBehaviour
                 {
                     Debug.Log("Mouse over NPC: " + hit.collider.gameObject.name);
 
-                    //NPCManager.Instance.HighlightNPC(hit.collider.gameObject); // HighlightNPC È£Ãâ
+                    //NPCManager.Instance.HighlightNPC(hit.collider.gameObject); // HighlightNPC í˜¸ì¶œ
 
 
-                    // ¸¶Áö¸· ÇÏÀÌ¶óÀÌÆ®µÈ NPC°¡ ÇöÀç NPC°¡ ¾Æ´Ï¸é ¸¶Áö¸· ÇÏÀÌ¶óÀÌÆ®µÈ NPCÀÇ ÇÏÀÌ¶óÀÌÆ®¸¦ ÇØÁ¦
+                    // ë§ˆì§€ë§‰ í•˜ì´ë¼ì´íŠ¸ëœ NPCê°€ í˜„ì¬ NPCê°€ ì•„ë‹ˆë©´ ë§ˆì§€ë§‰ í•˜ì´ë¼ì´íŠ¸ëœ NPCì˜ í•˜ì´ë¼ì´íŠ¸ë¥¼ í•´ì œ
                     if (lastHighlightedNPC != null && lastHighlightedNPC != hit.collider.gameObject)
                     {
                         //NPCManager.Instance.UnhighlightNPC(lastHighlightedNPC);
@@ -128,7 +128,7 @@ public class RaycastManager : MonoBehaviour
             }
         }
 
-        // ¸¸¾à Raycast°¡ NPC¿¡ ´êÁö ¾ÊÀ¸¸é ¸ğµç ÇÏÀÌ¶óÀÌÆ® ÇØÁ¦
+        // ë§Œì•½ Raycastê°€ NPCì— ë‹¿ì§€ ì•Šìœ¼ë©´ ëª¨ë“  í•˜ì´ë¼ì´íŠ¸ í•´ì œ
         if (lastHighlightedNPC != null)
         {
             //NPCManager.Instance.UnhighlightAllNPCs();
