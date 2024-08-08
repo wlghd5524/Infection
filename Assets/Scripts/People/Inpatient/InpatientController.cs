@@ -92,5 +92,6 @@ public class InpatientController : MonoBehaviour
         yield return new WaitUntil(() => nurseSignal);
         yield return new WaitForSeconds(2.0f);
         agent.isStopped = false;
+        nurseSignal = false;
     }
 }
